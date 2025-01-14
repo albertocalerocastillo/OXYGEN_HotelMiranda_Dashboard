@@ -79,10 +79,11 @@ export const SidebarItemStyled = styled.div`
 `
 
 export const SideBarProfileStyled = styled.div`
+    width: 70%;
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin: 2rem 1rem;
+    margin: 0rem 1rem;
     background: #ffffff;
     border-radius: 1rem;
     box-shadow: 0px 12px 16px #d5d5d5
@@ -93,7 +94,7 @@ export const SideBarProfilePhotoStyled = styled.div`
     margin-bottom: 1rem;
 
     img {
-        width: 100%;
+        width: 50%;
         height: auto;
         border-radius: 1rem
     }

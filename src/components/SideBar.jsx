@@ -23,14 +23,12 @@ export const SideBar = ({ isVisible }) => {
         </SideBarTitleStyled>
       </SideBarHeaderStyled>
 
-      {/* Sidebar Menu Items */}
       <SidebarItemStyled><DashboardIcon /><p>Dashboard</p></SidebarItemStyled>
       <SidebarItemStyled><BookingIcon /><p>Booking</p></SidebarItemStyled>
       <SidebarItemStyled><RoomsIcon /><p>Rooms</p></SidebarItemStyled>
       <SidebarItemStyled><ContactIcon /><p>Contact</p></SidebarItemStyled>
       <SidebarItemStyled><UsersIcon /><p>Users</p></SidebarItemStyled>
 
-      {/* Profile Section */}
       <SideBarProfileStyled>
         <SideBarProfilePhotoStyled><img src={photo} alt="Profile" /></SideBarProfilePhotoStyled>
         <SideBarProfileNameStyled>Alberto Calero</SideBarProfileNameStyled>
@@ -38,7 +36,6 @@ export const SideBar = ({ isVisible }) => {
         <SideBarProfileButtonStyled>Editar</SideBarProfileButtonStyled>
       </SideBarProfileStyled>
 
-      {/* Footer */}
       <SideBarCopyrightStyled>
         <SideBarCopyrightTitleStyled>Travl Hotel Admin Dashboard</SideBarCopyrightTitleStyled>
         <SideBarCopyrightTextStyled>© 2025 All Rights Reserved</SideBarCopyrightTextStyled>

@@ -67,11 +67,12 @@ const IconContainer = styled.div`
 const ContactCardsContainer = styled.div`
   position: relative;
   width: 98%;
-  transition: margin-left 0.5s;
+  transition: margin-left 0.3s ease;
   background-color: #ffffff;
   box-shadow: 0px 4px 4px #00000005;
   border-radius: 20px;
   padding: 5px 72px 70px 30px;
+  
 `;
 
 const CardsContainer = styled.div`

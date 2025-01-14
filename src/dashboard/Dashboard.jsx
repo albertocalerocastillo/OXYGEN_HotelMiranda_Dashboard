@@ -1,9 +1,4 @@
 import React from "react";
-import { IoBedOutline } from "react-icons/io5";
-import { LuCalendarCheck } from "react-icons/lu";
-import { RiLoginBoxLine, RiLogoutBoxLine } from "react-icons/ri";
-import { FaArrowRightLong } from "react-icons/fa6";
-import CardContact from "../components/CardContact";
 import {
   BoxContainer,
   ChildDivContainer,
@@ -16,10 +11,15 @@ import {
   Title,
   ButtonCard,
 } from "./DashboardStyles";
+import { IoBedOutline } from "react-icons/io5";
+import { LuCalendarCheck } from "react-icons/lu";
+import { RiLoginBoxLine, RiLogoutBoxLine } from "react-icons/ri";
+import { FaArrowRightLong } from "react-icons/fa6";
+import CardContact from "../components/CardContact";
 
-const Dashboard = () => {
+const Dashboard = ({ isSidebarVisible }) => {
   return (
-    <>
+    <div style={{ marginLeft: isSidebarVisible ? "250px" : "70px", transition: "margin-left 0.3s ease" }}>
       <BoxContainer>
         <ChildDivContainer>
           <ChildDivColor bgcolor={"#FFEDEC"}>
@@ -32,7 +32,6 @@ const Dashboard = () => {
             <DashboardSpan>New Booking</DashboardSpan>
           </DashboardParagraph>
         </ChildDivContainer>
-
         <ChildDivContainer>
           <ChildDivColor bgcolor={"#E23428"}>
             <IconContainer>
@@ -44,7 +43,6 @@ const Dashboard = () => {
             <DashboardSpan>Scheduled Room</DashboardSpan>
           </DashboardParagraph>
         </ChildDivContainer>
-
         <ChildDivContainer>
           <ChildDivColor bgcolor={"#FFEDEC"}>
             <IconContainer>
@@ -56,7 +54,6 @@ const Dashboard = () => {
             <DashboardSpan>Check in</DashboardSpan>
           </DashboardParagraph>
         </ChildDivContainer>
-
         <ChildDivContainer>
           <ChildDivColor bgcolor={"#FFEDEC"}>
             <IconContainer>
@@ -81,7 +78,7 @@ const Dashboard = () => {
           <FaArrowRightLong fontSize={"xx-large"} color={"#ffffff"} />
         </ButtonCard>
       </ContactCardsContainer>
-    </>
+    </div>
   );
 };
 

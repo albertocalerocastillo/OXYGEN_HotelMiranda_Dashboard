@@ -2,33 +2,21 @@ import React, { useState } from "react";
 import NavBar from "./NavBar";
 import { SideBar } from "./SideBar";
 import { Outlet } from "react-router-dom";
+import { LayoutContainer, MainContent, Content } from "./LayoutStyled";
 
 const Layout = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(true);
-
-  const toggleSidebar = () => {
-    setSidebarOpen(!isSidebarOpen);
-  };
+  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      {/* Sidebar dinámico */}
-      <SideBar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-
-      {/* Contenedor principal */}
-      <div
-        style={{
-          flexGrow: 1,
-          marginLeft: isSidebarOpen ? "240px" : "70px",
-          transition: "margin-left 0.3s ease",
-        }}
-      >
-        <NavBar />
-        <div style={{ marginTop: "70px", padding: "1rem" }}>
+    <LayoutContainer sidebarVisible={isSidebarVisible}>
+      <SideBar isVisible={isSidebarVisible} />
+      <MainContent sidebarVisible={isSidebarVisible}>
+        <NavBar toggleSidebar={() => setIsSidebarVisible(!isSidebarVisible)} />
+        <Content>
           <Outlet />
-        </div>
-      </div>
-    </div>
+        </Content>
+      </MainContent>
+    </LayoutContainer>
   );
 };
 
