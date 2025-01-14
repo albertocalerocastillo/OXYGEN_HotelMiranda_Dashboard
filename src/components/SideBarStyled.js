@@ -3,22 +3,23 @@ import styled from "styled-components"
 
 export const SideBarStyled = styled.div`
     padding: 1rem 0;
-    width: 25%;
+    width: 20%;
     height: 100%;
     background: #ffffff;
     position: fixed;
     top: 0;
     left: ${({ isVisible }) => (isVisible ? "0" : "-100%")};
-    transition: left 0.3s ease-in-out;
     z-index: 10;
 `
 
 export const SideBarHeaderStyled = styled.div`
+    margin-right: 3rem;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
+    gap: 2rem;
     align-items: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2.5rem;
 
     img {
         width: 4rem;
@@ -29,7 +30,7 @@ export const SideBarTitleStyled = styled.div`
     text-align: start;
 
     h2 {
-        color: #000000;
+        color: #212121;
         font-size: 2rem;
         margin: 0;
     }
@@ -38,7 +39,7 @@ export const SideBarTitleStyled = styled.div`
         color: #5D5449;
         font-family: 'Poppins';
         font-weight: 400;
-        font-size: .75rem;
+        font-size: 0.75rem;
         margin: 0;
     }
 `
@@ -51,6 +52,7 @@ export const SidebarItemStyled = styled.div`
     padding: 0 2rem;
 
     svg {
+        margin-left: 1.7rem;
         color: #799283;
         height: 1.5rem;
         width: 1.5rem;

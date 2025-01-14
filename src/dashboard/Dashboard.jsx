@@ -16,6 +16,7 @@ import { LuCalendarCheck } from "react-icons/lu";
 import { RiLoginBoxLine, RiLogoutBoxLine } from "react-icons/ri";
 import { FaArrowRightLong } from "react-icons/fa6";
 import CardContact from "../components/CardContact";
+import Calendar from "./Calendar";
 
 const Dashboard = ({ isSidebarVisible }) => {
   return (
@@ -66,6 +67,10 @@ const Dashboard = ({ isSidebarVisible }) => {
           </DashboardParagraph>
         </ChildDivContainer>
       </BoxContainer>
+
+      <div>
+        <Calendar />
+      </div>
 
       <ContactCardsContainer>
         <Title>Latest Review by Customers</Title>

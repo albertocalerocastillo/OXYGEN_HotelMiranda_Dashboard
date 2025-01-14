@@ -5,7 +5,7 @@ import {
   SideBarProfileEmailStyled, SideBarProfileButtonStyled, SideBarCopyrightStyled,
   SideBarCopyrightTitleStyled, SideBarCopyrightTextStyled
 } from "./SideBarStyled";
-import hotelIcon from '../assets/perfil.jpg';
+import logo from '../assets/logo.png';
 import photo from '../assets/perfil.jpg';
 import {
   LuLayoutDashboard as DashboardIcon, LuCalendarCheck as BookingIcon,
@@ -16,7 +16,7 @@ export const SideBar = ({ isVisible }) => {
   return (
     <SideBarStyled isVisible={isVisible}>
       <SideBarHeaderStyled>
-        <img src={hotelIcon} alt="Hotel Icon" />
+        <img src={logo} alt="Hotel Icon" />
         <SideBarTitleStyled>
           <h2>travl</h2>
           <p>Hotel Admin Dashboard</p>

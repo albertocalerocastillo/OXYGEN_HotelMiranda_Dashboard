@@ -12,7 +12,7 @@ const BoxContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 40px;
-  margin: 60px auto;
+  margin: 9rem auto;
 `;
 
 
@@ -46,7 +46,7 @@ const ChildDivColor = styled.div`
 
 const DashboardParagraph = styled.p`
   margin: 0px;
-  padding-top: 29px;
+  padding-top: 45px;
   text-align: left;
   font: normal normal 600 30px 'Poppins';
   color: #393939;
@@ -55,7 +55,8 @@ const DashboardParagraph = styled.p`
 const DashboardSpan = styled.p`
   color: #787878;
   font-size: 14px;
-  font-weight: 100;
+  font-weight: 400;
+  margin-top: -0.1rem;
 `;
 
 const IconContainer = styled.div`
