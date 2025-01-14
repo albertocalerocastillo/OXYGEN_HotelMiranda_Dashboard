@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom';
 import {
   PageContainer,
   TitleBlock,
@@ -18,10 +19,13 @@ const Login = () => {
   const MASTER_EMAIL = "alberto@gmail.com";
   const MASTER_PASSWORD = "alberto1234";
 
+  const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email === MASTER_EMAIL && password === MASTER_PASSWORD) {
       alert("Login exitoso");
+      navigate("/dashboard");
     } else {
       alert("Credenciales incorrectas");
     }
