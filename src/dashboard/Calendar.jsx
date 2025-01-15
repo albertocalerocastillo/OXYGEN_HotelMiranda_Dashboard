@@ -5,7 +5,6 @@ import {
   StyledCalendarHeader,
   StyledBookingDetails,
   StyledBookingItem,
-  StyledRoomDetails,
   StyledRoomType,
   StyledCustomerName,
   StyledCalendar,

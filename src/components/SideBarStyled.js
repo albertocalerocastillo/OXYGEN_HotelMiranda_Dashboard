@@ -1,6 +1,5 @@
 import styled from "styled-components"
 
-
 export const SideBarStyled = styled.div`
     padding: 1rem 0;
     width: 20%;
@@ -138,7 +137,7 @@ export const SideBarCopyrightTitleStyled = styled.p`
     font-family: 'Poppins';
     font-size: 1rem;
     color: #212121;
-    font-weight: 500;
+    font-weight: 600;
     margin: 0;
 `
 

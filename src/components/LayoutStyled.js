@@ -7,7 +7,7 @@ export const LayoutContainer = styled.div`
 
 export const MainContent = styled.div`
   flex-grow: 1;
-  margin-left: ${(props) => (props.sidebarVisible ? "380px" : "0")}; /* Ajusta según el ancho del sidebar */
+  margin-left: ${(props) => (props.sidebarVisible ? "380px" : "0")};
 `;
 
 export const Content = styled.div`

@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from 'react-router-dom';
 import {
   SideBarStyled, SideBarHeaderStyled, SideBarTitleStyled, SidebarItemStyled,
   SideBarProfileStyled, SideBarProfilePhotoStyled, SideBarProfileNameStyled,
@@ -16,18 +17,28 @@ export const SideBar = ({ isVisible }) => {
   return (
     <SideBarStyled isVisible={isVisible}>
       <SideBarHeaderStyled>
-        <img src={logo} alt="Hotel Icon" />
+        <img src={logo} alt="Logo Icon" />
         <SideBarTitleStyled>
           <h2>travl</h2>
           <p>Hotel Admin Dashboard</p>
         </SideBarTitleStyled>
       </SideBarHeaderStyled>
 
-      <SidebarItemStyled><DashboardIcon /><p>Dashboard</p></SidebarItemStyled>
-      <SidebarItemStyled><BookingIcon /><p>Booking</p></SidebarItemStyled>
-      <SidebarItemStyled><RoomsIcon /><p>Rooms</p></SidebarItemStyled>
-      <SidebarItemStyled><ContactIcon /><p>Contact</p></SidebarItemStyled>
-      <SidebarItemStyled><UsersIcon /><p>Users</p></SidebarItemStyled>
+      <Link to="/dashboard">
+        <SidebarItemStyled><DashboardIcon /><p>Dashboard</p></SidebarItemStyled>
+      </Link>
+      <Link to="/bookings">
+        <SidebarItemStyled><BookingIcon /><p>Bookings</p></SidebarItemStyled>
+      </Link>
+      <Link to="/rooms">
+        <SidebarItemStyled><RoomsIcon /><p>Rooms</p></SidebarItemStyled>
+      </Link>
+      <Link to="/contact">
+        <SidebarItemStyled><ContactIcon /><p>Contact</p></SidebarItemStyled>
+      </Link>
+      <Link to="/users">
+        <SidebarItemStyled><UsersIcon /><p>Users</p></SidebarItemStyled>
+      </Link>
 
       <SideBarProfileStyled>
         <SideBarProfilePhotoStyled><img src={photo} alt="Profile" /></SideBarProfilePhotoStyled>

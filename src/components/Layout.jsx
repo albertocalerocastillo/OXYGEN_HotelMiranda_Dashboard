@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 import { LayoutContainer, MainContent, Content } from "./LayoutStyled";
 
 const Layout = () => {
-  const [isSidebarVisible, setIsSidebarVisible] = useState(true);
+  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
   return (
     <LayoutContainer sidebarVisible={isSidebarVisible}>
