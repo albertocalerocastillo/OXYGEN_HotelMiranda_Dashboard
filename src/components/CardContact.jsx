@@ -4,14 +4,14 @@ import Perfil from "../assets/perfil.jpg";
 import { FcOk } from "react-icons/fc";
 import { GiCancel } from "react-icons/gi";
 
-const CardContact = () => {
+const CardContact = ({ onClick }) => {
+  const content = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam";
+
   return (
     <div>
-      <MainCard>
+      <MainCard onClick={() => onClick(content)}>
         <ParagraphContact>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam
+          {content}
         </ParagraphContact>
         <ContactContainer>
           <ImageContainer>

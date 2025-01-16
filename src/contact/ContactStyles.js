@@ -1,28 +1,19 @@
 import styled from "styled-components";
 
 const ContactCardsContainer = styled.div`
-  position: relative;
-  width: 98%;
-  transition: margin-left 0.3s ease;
-  background-color: #ffffff;
-  box-shadow: 0px 4px 4px #00000005;
-  border-radius: 20px;
-  padding: 5px 72px 70px 30px;
-  
+    margin-top: 8rem;
+    position: relative;
+    width: 98%;
+    transition: margin-left 0.3s ease;
+    background-color: #F8F8F8;
+    border-radius: 20px;
+    padding: 5px 72px 70px 30px;
 `;
 
 const CardsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  gap: 40px;
-`;
-
-const Title = styled.h2`
-  width: 100%;
-  padding-bottom: 30px;
-  text-align: left;
-  letter-spacing: 0px;
-  color: #393939;
+  gap: 3rem;
 `;
 
 const ButtonCard = styled.button`
@@ -48,6 +39,5 @@ const ButtonCard = styled.button`
 export {
   ContactCardsContainer,
   CardsContainer,
-  Title,
   ButtonCard,
 };
