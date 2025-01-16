@@ -19,10 +19,16 @@ const NavBar = ({ toggleSidebar, isSidebarVisible }) => {
         return "Dashboard";
       case "/bookings":
         return "Bookings";
+      case "/rooms":
+        return "Rooms";
+      case "/new-room":
+        return "Rooms > Nueva habitación";
       case "/contact":
         return "Contact";
       case "/users":
         return "Users";
+      case "/new-employee":
+        return "Users > Nuevo user";
       default:
         return "Dashboard";
     }

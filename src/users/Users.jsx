@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   UsersStyled,
   UsersMenuStyled,
@@ -23,8 +24,10 @@ import {
 } from "./UsersStyles";
 import profilePhoto1 from "../assets/perfil.jpg";
 import profilePhoto2 from "../assets/perfil.jpg";
+import { MdOutlineLocalPhone } from "react-icons/md";
 
 const Users = () => {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -152,8 +155,7 @@ const Users = () => {
           contact: "012 334 55513",
           status: "INACTIVE",
           profilePhoto: profilePhoto1
-        },
-  ]);
+        },  ]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -237,16 +239,18 @@ const Users = () => {
         <SearchBarContainer>
           <SearchBarInputStyled
             type="text"
-            placeholder="Search by name..."
+            placeholder="Buscar empleado..."
             value={searchTerm}
             onChange={handleSearch}
           />
         </SearchBarContainer>
         <SortSelectStyled value={sortOption} onChange={handleSortOption}>
-          <option value="date">Sort by Date</option>
-          <option value="name">Sort by Name</option>
+          <option value="date">Filtrar por Start Date</option>
+          <option value="name">Filtrar por Name</option>
         </SortSelectStyled>
-        <UsersButtonStyled>+ New Employee</UsersButtonStyled>
+        <UsersButtonStyled onClick={() => navigate("/new-employee")}>
+          + New Employee
+        </UsersButtonStyled>
       </UsersMenuStyled>
       <UsersFirstRowStyled>
         <UsersFirstRowItemStyled>Photo</UsersFirstRowItemStyled>
@@ -268,7 +272,7 @@ const Users = () => {
           </UsersItemNameStyled>
           <UsersItemTextStyled>{user.joinDate}</UsersItemTextStyled>
           <UsersItemJobStyled>{user.jobDesk}</UsersItemJobStyled>
-          <UsersItemContactStyled>{user.contact}</UsersItemContactStyled>
+          <UsersItemContactStyled><MdOutlineLocalPhone style={{ marginRight: "0.5rem", fontSize: "1.5rem" }} /> {user.contact}</UsersItemContactStyled>
           <UsersItemStatusStyled status={user.status}>{user.status}</UsersItemStatusStyled>
         </UsersItemStyled>
       ))}
