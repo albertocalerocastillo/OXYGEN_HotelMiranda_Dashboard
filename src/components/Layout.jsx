@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import NavBar from "./NavBar";
 import { SideBar } from "./SideBar";
 import { Outlet } from "react-router-dom";
 import { LayoutContainer, MainContent, Content } from "./LayoutStyled";
 
-const Layout = () => {
-  const [isSidebarVisible, setIsSidebarVisible] = useState(false);
-
+const Layout = ({ isSidebarVisible, toggleSidebar }) => {
   return (
     <LayoutContainer sidebarVisible={isSidebarVisible}>
       <SideBar isVisible={isSidebarVisible} />
       <MainContent sidebarVisible={isSidebarVisible}>
-        <NavBar toggleSidebar={() => setIsSidebarVisible(!isSidebarVisible)} />
+        <NavBar toggleSidebar={toggleSidebar} isSidebarVisible={isSidebarVisible} />
         <Content>
           <Outlet />
         </Content>
