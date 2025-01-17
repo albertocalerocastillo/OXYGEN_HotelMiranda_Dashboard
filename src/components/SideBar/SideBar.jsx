@@ -6,8 +6,8 @@ import {
   SideBarProfileEmailStyled, SideBarProfileButtonStyled, SideBarCopyrightStyled,
   SideBarCopyrightTitleStyled, SideBarCopyrightTextStyled
 } from "./SideBarStyled";
-import logo from '../assets/logo.png';
-import photo from '../assets/perfil.jpg';
+import logo from '../../assets/logo.png';
+import photo from '../../assets/perfil.jpg';
 import {
   LuLayoutDashboard as DashboardIcon, LuCalendarCheck as BookingIcon,
   LuKeyRound as RoomsIcon, LuContact as ContactIcon, LuUsers as UsersIcon

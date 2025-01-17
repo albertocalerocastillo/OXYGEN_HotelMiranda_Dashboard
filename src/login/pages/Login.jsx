@@ -10,7 +10,7 @@ import {
   Button,
   MasterCredentialsBlock,
   Title,
-} from "./LoginStyles";
+} from "../components/LoginStyles";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -24,6 +24,7 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email === MASTER_EMAIL && password === MASTER_PASSWORD) {
+      localStorage.setItem("isAuthenticated", "true");
       alert("Login exitoso");
       navigate("/dashboard");
     } else {

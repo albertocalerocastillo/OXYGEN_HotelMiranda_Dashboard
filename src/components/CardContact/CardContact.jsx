@@ -1,6 +1,6 @@
 import React from "react";
 import { MainCard, ParagraphContact, ContactContainer, ImageContainer, DataUserContainer, DataUserContent, DataDescription, IconsContainer } from "./CardContactStyles";
-import Perfil from "../assets/perfil.jpg";
+import Perfil from "../../assets/perfil.jpg";
 import { FcOk } from "react-icons/fc";
 import { GiCancel } from "react-icons/gi";
 

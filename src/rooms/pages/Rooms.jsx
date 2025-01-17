@@ -18,8 +18,8 @@ import {
   PaginationContainer,
   PaginationButton,
   DataInfoStyled
-} from "./RoomsStyles";
-import RoomPhoto from '../assets/perfil.jpg';
+} from "../components/RoomsStyles";
+import RoomPhoto from '../../assets/perfil.jpg';
 
 const Rooms = () => {
   const navigate = useNavigate();

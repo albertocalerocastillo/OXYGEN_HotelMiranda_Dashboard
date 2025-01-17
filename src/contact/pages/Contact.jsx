@@ -3,10 +3,10 @@ import {
   ContactCardsContainer,
   CardsContainer,
   ButtonCard,
-} from "./ContactStyles";
+} from "../components/ContactStyles";
 import { FaArrowRightLong } from "react-icons/fa6";
-import CardContact from "../components/CardContact";
-import Popup from "./Popup";
+import CardContact from "../../components/CardContact/CardContact";
+import Popup from "../components/Popup";
 import {
   ReviewsStyled,
   ReviewsMenuStyled,
@@ -21,7 +21,7 @@ import {
   ReviewsItemDateStyled,
   ReviewsItemActionsStyled,
   ReviewsButtonStyled,
-} from "./ReviewsStyles";
+} from "../components/ReviewsStyles";
 
 const Contact = ({ isSidebarVisible }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);

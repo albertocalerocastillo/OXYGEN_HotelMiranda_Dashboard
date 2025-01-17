@@ -1,7 +1,6 @@
 import { styled } from "styled-components";
 
 export const Nav = styled.nav`
-    position: fixed;
     width: 100%;
     height: 100px;
     box-shadow: 0px 3px 10px #00000005;
@@ -12,6 +11,7 @@ export const Nav = styled.nav`
     z-index: 99;
     padding-left: 20px; 
     top: 0;
+    margin-left: -0.7rem;
 `;
 
 export const NavItemContainer = styled.div`

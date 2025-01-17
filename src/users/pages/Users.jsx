@@ -21,9 +21,9 @@ import {
   PaginationContainer,
   PaginationButton,
   DataInfoStyled
-} from "./UsersStyles";
-import profilePhoto1 from "../assets/perfil.jpg";
-import profilePhoto2 from "../assets/perfil.jpg";
+} from "../components/UsersStyles";
+import profilePhoto1 from "../../assets/perfil.jpg";
+import profilePhoto2 from "../../assets/perfil.jpg";
 import { MdOutlineLocalPhone } from "react-icons/md";
 
 const Users = () => {

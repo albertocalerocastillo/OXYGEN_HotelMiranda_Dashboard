@@ -13,7 +13,7 @@ import {
   FormStatus,
   FormPhotoInput,
   BackButton
-} from "./NewRoomFormStyles";
+} from "../components/NewRoomFormStyles";
 
 const NewRoomForm = () => {
   const navigate = useNavigate();

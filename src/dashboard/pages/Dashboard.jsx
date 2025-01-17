@@ -10,13 +10,13 @@ import {
   CardsContainer,
   Title,
   ButtonCard,
-} from "./DashboardStyles";
+} from "../components/DashboardStyles";
 import { IoBedOutline } from "react-icons/io5";
 import { LuCalendarCheck } from "react-icons/lu";
 import { RiLoginBoxLine, RiLogoutBoxLine } from "react-icons/ri";
 import { FaArrowRightLong } from "react-icons/fa6";
-import CardContact from "../components/CardContact";
-import Calendar from "./Calendar";
+import CardContact from "../../components/CardContact/CardContact";
+import Calendar from "../components/Calendar";
 
 const Dashboard = ({ isSidebarVisible }) => {
   return (

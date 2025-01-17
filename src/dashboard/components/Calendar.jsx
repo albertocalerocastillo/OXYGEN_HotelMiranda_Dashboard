@@ -21,8 +21,8 @@ import {
   StyledBookingDays,
   StyledViewMore,
 } from "./CalendarStyles"; 
-import perfilImage from "../assets/perfil.jpg";
-import ReservationStats from "../dashboard/ReservationStats"; 
+import perfilImage from "../../assets/perfil.jpg";
+import ReservationStats from "./ReservationStats"; 
 
 const CustomCalendar = () => {
   const [value, setValue] = useState(new Date());

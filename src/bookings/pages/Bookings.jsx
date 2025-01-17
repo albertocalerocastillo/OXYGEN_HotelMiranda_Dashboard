@@ -2,8 +2,8 @@ import { BookingsFirstRowItemStyled, BookingsFirstRowStyled, BookingsItemCheckHo
     BookingsItemBookingsInfoStyled, BookingsItemBookingsPhotoStyled, BookingsItemBookingsStyled, BookingsItemOrderDateStyled, BookingsItemSpecialRequestStyled, 
     BookingsItemStatusStyled, BookingsItemStyled, BookingsItemTextStyled,BookingsMenuItemStyled, BookingsMenuSearchBarInputStyled, BookingsMenuSearchBarStyled, 
     BookingsMenuSortBy, BookingsMenuSortByText, BookingsMenuStyled, BookingsMenuTextStyled,
-    BookingsStyled } from "./BookingsStyles";
-import photo from '../assets/perfil.jpg';
+    BookingsStyled } from "../components/BookingsStyles";
+import photo from '../../assets/perfil.jpg';
 import { SlOptionsVertical } from "react-icons/sl";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosSearch } from "react-icons/io";

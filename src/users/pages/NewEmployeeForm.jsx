@@ -13,7 +13,7 @@ import {
   FormStatus,
   FormPhotoInput,
   BackButton
-} from "./NewEmployeeFormStyles";
+} from "../components/NewEmployeeFormStyles";
 
 const NewEmployeeForm = () => {
   const navigate = useNavigate();
