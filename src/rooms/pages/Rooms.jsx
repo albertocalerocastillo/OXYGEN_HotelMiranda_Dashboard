@@ -20,7 +20,7 @@ import {
   DataInfoStyled
 } from "../components/RoomsStyles";
 import RoomPhoto from '../../assets/perfil.jpg';
-import roomsData from './roomsData.json';
+import roomsData from '../components/roomsData.json';
 
 const Rooms = () => {
   const navigate = useNavigate();

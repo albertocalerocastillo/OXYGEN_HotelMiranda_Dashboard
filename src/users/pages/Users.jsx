@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { MdOutlineLocalPhone } from "react-icons/md";
 import {
   UsersStyled,
   UsersMenuStyled,
@@ -22,9 +23,9 @@ import {
   PaginationButton,
   DataInfoStyled
 } from "../components/UsersStyles";
-import profilePhoto1 from "../../assets/perfil.jpg";
-import profilePhoto2 from "../../assets/perfil.jpg";
-import { MdOutlineLocalPhone } from "react-icons/md";
+import usersData from '../components/usersData.json';
+
+import profilePhoto from '../../assets/perfil.jpg';
 
 const Users = () => {
   const navigate = useNavigate();
@@ -32,130 +33,16 @@ const Users = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOption, setSortOption] = useState("date");
-  
+
   const usersPerPage = 10;
 
-  const [users, setUsers] = useState([
-    {
-        id: "#12341225",
-        name: "James Sitepu",
-        email: "james.sitepu@example.com",
-        joinDate: "Aug 2th 2017",
-        jobDesk: "Answering guest inquiries, directing phone calls, coordinating travel plans, and more.",
-        contact: "012 334 55512",
-        status: "ACTIVE",
-        profilePhoto: profilePhoto1
-      },
-      {
-        id: "#12341226",
-        name: "Louis Humbs",
-        email: "louis.humbs@example.com",
-        joinDate: "Aug 2th 2010",
-        jobDesk: "Offer restaurant and activity recommendations and assist guests in arranging transportation",
-        contact: "012 334 55512",
-        status: "INACTIVE",
-        profilePhoto: profilePhoto2
-      },
-      {
-        id: "#12341227",
-        name: "Sarah Lee",
-        email: "sarah.lee@example.com",
-        joinDate: "Sep 15th 2018",
-        jobDesk: "Managing bookings and customer service.",
-        contact: "012 334 55513",
-        status: "ACTIVE",
-        profilePhoto: profilePhoto1
-      },
-      {
-          id: "#12341228",
-          name: "Alberto Calero",
-          email: "albertocctrabajo@gmail.com",
-          joinDate: "Sep 15th 2011",
-          jobDesk: "Managing bookings and customer service.",
-          contact: "012 334 55513",
-          status: "ACTIVE",
-          profilePhoto: profilePhoto1
-        },
-        {
-          id: "#12341229",
-          name: "Alberto Calero",
-          email: "albertocctrabajo@gmail.com",
-          joinDate: "Sep 15th 2011",
-          jobDesk: "Managing bookings and customer service.",
-          contact: "012 334 55513",
-          status: "INACTIVE",
-          profilePhoto: profilePhoto1
-        },
-        {
-          id: "#22341229",
-          name: "Alberto Calero",
-          email: "albertocctrabajo@gmail.com",
-          joinDate: "Sep 15th 2011",
-          jobDesk: "Managing bookings and customer service.",
-          contact: "012 334 55513",
-          status: "INACTIVE",
-          profilePhoto: profilePhoto1
-        },
-        {
-          id: "#22341221",
-          name: "Alberto Calero",
-          email: "albertocctrabajo@gmail.com",
-          joinDate: "Sep 15th 2011",
-          jobDesk: "Managing bookings and customer service.",
-          contact: "012 334 55513",
-          status: "ACTIVE",
-          profilePhoto: profilePhoto1
-        },
-        {
-          id: "#29871221",
-          name: "Alberto Calero",
-          email: "albertocctrabajo@gmail.com",
-          joinDate: "Sep 15th 2011",
-          jobDesk: "Managing bookings and customer service.",
-          contact: "012 334 55513",
-          status: "ACTIVE",
-          profilePhoto: profilePhoto1
-        },
-        {
-          id: "#22341652",
-          name: "Alberto Calero",
-          email: "albertocctrabajo@gmail.com",
-          joinDate: "Sep 15th 2011",
-          jobDesk: "Managing bookings and customer service.",
-          contact: "012 334 55513",
-          status: "ACTIVE",
-          profilePhoto: profilePhoto1
-        },
-        {
-          id: "#22681221",
-          name: "Alberto Calero",
-          email: "albertocctrabajo@gmail.com",
-          joinDate: "Sep 15th 2011",
-          jobDesk: "Managing bookings and customer service.",
-          contact: "012 334 55513",
-          status: "INACTIVE",
-          profilePhoto: profilePhoto1
-        },
-        {
-          id: "#22341001",
-          name: "Alberto Calero",
-          email: "albertocctrabajo@gmail.com",
-          joinDate: "Sep 15th 2011",
-          jobDesk: "Managing bookings and customer service.",
-          contact: "012 334 55513",
-          status: "ACTIVE",
-          profilePhoto: profilePhoto1
-        },
-        {
-          id: "#22346671",
-          name: "Alberto Calero",
-          email: "albertocctrabajo@gmail.com",
-          joinDate: "Sep 15th 2011",
-          jobDesk: "Managing bookings and customer service.",
-          contact: "012 334 55513",
-          status: "INACTIVE",
-          profilePhoto: profilePhoto1
-        },  ]);
+  useEffect(() => {
+    const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
+    const allUsers = [...usersData, ...storedUsers];
+    setUsers(allUsers);
+  }, []);
+
+  const [users, setUsers] = useState([]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -263,7 +150,7 @@ const Users = () => {
       {currentUsers.map(user => (
         <UsersItemStyled key={user.id}>
           <UsersProfilePhotoStyled>
-            <img src={user.profilePhoto} alt="Profile" />
+            <img src={user.profilePhoto && user.profilePhoto.startsWith('http') ? user.profilePhoto : profilePhoto} alt="Profile" />
           </UsersProfilePhotoStyled>
           <UsersItemNameStyled>
             {user.name}<br />

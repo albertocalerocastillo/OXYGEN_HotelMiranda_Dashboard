@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import CryptoJS from "crypto-js";
 import {
   FormContainer,
   FormTitle,
@@ -8,10 +9,10 @@ import {
   FormInput,
   FormSelect,
   FormOption,
-  FormTextarea,
   FormButton,
-  FormStatus,
+  FormTextarea,
   FormPhotoInput,
+  FormStatus,
   BackButton
 } from "../components/NewEmployeeFormStyles";
 
@@ -19,13 +20,13 @@ const NewEmployeeForm = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     id: "",
-    photo: "",
+    profilePhoto: "",
     name: "",
-    position: "Manager",
+    job: "Manager",
     email: "",
-    phone: "",
-    startDate: "",
-    description: "",
+    contact: "",
+    joinDate: "",
+    jobDesk: "",
     status: "ACTIVE",
     password: ""
   });
@@ -39,20 +40,18 @@ const NewEmployeeForm = () => {
     const file = event.target.files[0];
     const reader = new FileReader();
     reader.onloadend = () => {
-      setFormData({ ...formData, photo: reader.result });
+      setFormData({ ...formData, profilePhoto: reader.result });
     };
     reader.readAsDataURL(file);
   };
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
     formData.id = `#${Math.floor(Math.random() * 1000000)}`;
-
-    const employees = JSON.parse(localStorage.getItem('employees')) || [];
-    employees.push(formData);
-    localStorage.setItem('employees', JSON.stringify(employees));
-
+    formData.password = CryptoJS.SHA256(formData.password).toString();
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    users.push(formData);
+    localStorage.setItem('users', JSON.stringify(users));
     navigate("/users");
   };
 
@@ -61,15 +60,15 @@ const NewEmployeeForm = () => {
       <FormTitle>New Employee Form</FormTitle>
       <FormField>
         <FormLabel>Photo</FormLabel>
-        <FormPhotoInput type="file" name="photo" onChange={handlePhotoChange} />
+        <FormPhotoInput type="file" name="profilePhoto" onChange={handlePhotoChange} />
       </FormField>
       <FormField>
-        <FormLabel>Nombre completo</FormLabel>
+        <FormLabel>Full Name</FormLabel>
         <FormInput type="text" name="name" value={formData.name} onChange={handleInputChange} required />
       </FormField>
       <FormField>
-        <FormLabel>Puesto</FormLabel>
-        <FormSelect name="position" value={formData.position} onChange={handleInputChange}>
+        <FormLabel>Job Position</FormLabel>
+        <FormSelect name="job" value={formData.job} onChange={handleInputChange}>
           <FormOption value="Manager">Manager</FormOption>
           <FormOption value="Recepción">Recepción</FormOption>
           <FormOption value="Servicio de Habitaciones">Servicio de Habitaciones</FormOption>
@@ -81,15 +80,15 @@ const NewEmployeeForm = () => {
       </FormField>
       <FormField>
         <FormLabel>Número de teléfono</FormLabel>
-        <FormInput type="tel" name="phone" value={formData.phone} onChange={handleInputChange} required />
+        <FormInput type="text" name="contact" value={formData.contact} onChange={handleInputChange} required />
       </FormField>
       <FormField>
         <FormLabel>Start Date</FormLabel>
-        <FormInput type="date" name="startDate" value={formData.startDate} onChange={handleInputChange} required />
+        <FormInput type="date" name="joinDate" value={formData.joinDate} onChange={handleInputChange} required />
       </FormField>
       <FormField>
         <FormLabel>Descripción de funciones</FormLabel>
-        <FormTextarea name="description" value={formData.description} onChange={handleInputChange} required />
+        <FormTextarea name="jobDesk" value={formData.jobDesk} onChange={handleInputChange} required />
       </FormField>
       <FormField>
         <FormLabel>Estado</FormLabel>
