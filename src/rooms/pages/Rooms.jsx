@@ -20,6 +20,7 @@ import {
   DataInfoStyled
 } from "../components/RoomsStyles";
 import RoomPhoto from '../../assets/perfil.jpg';
+import roomsData from './roomsData.json';
 
 const Rooms = () => {
   const navigate = useNavigate();
@@ -30,41 +31,29 @@ const Rooms = () => {
 
   const roomsPerPage = 10;
 
-  const rooms = [
-    {
-      id: "#000123456",
-      photo: RoomPhoto,
-      number: "91234",
-      name: "Deluxe A",
-      type: "Double Bed",
-      amenities: "AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi",
-      price: "$125",
-      offerPrice: "$80",
-      status: "Available"
-    },
-    {
-      id: "#000123457",
-      photo: RoomPhoto,
-      number: "91234",
-      name: "Deluxe A",
-      type: "Double Bed",
-      amenities: "AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi",
-      price: "$160",
-      offerPrice: "$100",
-      status: "Booked"
-    },
-    {
-      id: "#000123458",
-      photo: RoomPhoto,
-      number: "91234",
-      name: "Deluxe A",
-      type: "Double Bed",
-      amenities: "AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi",
-      price: "$145",
-      offerPrice: "$90",
-      status: "Available"
-    },
-  ];
+  useEffect(() => {
+    const storedRooms = JSON.parse(localStorage.getItem('rooms')) || [];
+    const allRooms = [...roomsData, ...storedRooms];
+    setRooms(allRooms);
+  }, []);
+
+  const [rooms, setRooms] = useState([]);
+
+  const calculateOfferPrice = (price, discount) => {
+    const priceValue = parseFloat(price.replace(/[^0-9.-]+/g, ""));
+    const discountValue = parseFloat(discount);
+    if (isNaN(priceValue) || isNaN(discountValue)) {
+      return "";
+    }
+    const offerPriceValue = priceValue - (priceValue * (discountValue / 100));
+    return `$${offerPriceValue.toFixed(2)}`;
+  };
+
+  const roomsWithImages = rooms.map(room => ({
+    ...room,
+    photo: RoomPhoto,
+    offerPrice: calculateOfferPrice(room.price, room.discount || "0")
+  }));
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -79,17 +68,21 @@ const Rooms = () => {
 
   const parsePrice = (priceString) => parseFloat(priceString.replace(/[^0-9.-]+/g, ""));
 
-  const filteredRooms = rooms
+  const filteredRooms = roomsWithImages
     .filter(room => 
-      room.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      room.type.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      room.amenities.toLowerCase().includes(searchTerm.toLowerCase())
+      (room.name && room.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (room.type && room.type.toLowerCase().includes(searchTerm.toLowerCase())) ||
+      (room.amenities && room.amenities.toLowerCase().includes(searchTerm.toLowerCase()))
     )
     .sort((a, b) => {
       if (sortOption === "number") {
-        return sortOrder === "asc" ? a.number.localeCompare(b.number) : b.number.localeCompare(a.number);
+        const numA = a.number || "";
+        const numB = b.number || "";
+        return sortOrder === "asc" ? numA.localeCompare(numB) : numB.localeCompare(numA);
       } else if (sortOption === "status") {
-        return sortOrder === "asc" ? a.status.localeCompare(b.status) : b.status.localeCompare(a.status);
+        const statusA = a.status || "";
+        const statusB = b.status || "";
+        return sortOrder === "asc" ? statusA.localeCompare(statusB) : statusB.localeCompare(statusA);
       } else if (sortOption === "price") {
         return sortOrder === "asc" ? parsePrice(a.price) - parsePrice(b.price) : parsePrice(b.price) - parsePrice(a.price);
       }
@@ -120,7 +113,7 @@ const Rooms = () => {
   return (
     <RoomsStyled>
       <RoomsMenuStyled>
-        <RoomsMenuItemStyled>All Rooms</RoomsMenuItemStyled>   
+        <RoomsMenuItemStyled>All Rooms</RoomsMenuItemStyled>
         <RoomsButtonStyled onClick={() => navigate("/new-room")}>
           + New Room
         </RoomsButtonStyled>

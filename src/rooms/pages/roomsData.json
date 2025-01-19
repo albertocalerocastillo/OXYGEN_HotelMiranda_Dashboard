@@ -1,0 +1,35 @@
+[
+    {
+      "id": "#000123456",
+      "photo": "perfil.jpg",
+      "number": "91234",
+      "name": "Deluxe A",
+      "type": "Double Bed",
+      "amenities": "AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi",
+      "price": "$125",
+      "offerPrice": "$80",
+      "status": "Available"
+    },
+    {
+      "id": "#000123457",
+      "photo": "perfil.jpg",
+      "number": "91234",
+      "name": "Deluxe A",
+      "type": "Double Bed",
+      "amenities": "AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi",
+      "price": "$160",
+      "offerPrice": "$100",
+      "status": "Booked"
+    },
+    {
+      "id": "#000123458",
+      "photo": "perfil.jpg",
+      "number": "91234",
+      "name": "Deluxe A",
+      "type": "Double Bed",
+      "amenities": "AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi",
+      "price": "$145",
+      "offerPrice": "$90",
+      "status": "Available"
+    }
+  ]  
