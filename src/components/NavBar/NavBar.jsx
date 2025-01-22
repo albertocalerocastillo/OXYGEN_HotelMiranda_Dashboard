@@ -29,8 +29,11 @@ const NavBar = ({ toggleSidebar, isSidebarVisible }) => {
         return "Users";
       case "/new-employee":
         return "Users > Nuevo user";
-      default:
-        return "Dashboard";
+        default:
+          if (location.pathname.startsWith("/bookings/details")) {
+            return "Bookings > Details";
+          }
+          return "Dashboard"
     }
   };
 

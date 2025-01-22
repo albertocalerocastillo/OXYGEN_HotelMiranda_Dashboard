@@ -9,6 +9,7 @@ import NewRoomForm from "./rooms/pages/NewRoomForm";
 import Contact from "./contact/pages/Contact";
 import Users from "./users/pages/Users";
 import NewEmployeeForm from "./users/pages/NewEmployeeForm";
+import BookingsDetails from "./bookings/pages/BookingsDetails";
 import Layout from "./components/Layout/Layout";
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         >
           <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
           <Route path="/bookings" element={<PrivateRoute element={<Bookings />} />} />
+          <Route path="/bookings/:bookingId" element={<PrivateRoute element={<BookingsDetails />} />} />
           <Route path="/rooms" element={<PrivateRoute element={<Rooms />} />} />
           <Route path="/new-room" element={<PrivateRoute element={<NewRoomForm />} />} />
           <Route path="/contact" element={<PrivateRoute element={<Contact />} />} />
