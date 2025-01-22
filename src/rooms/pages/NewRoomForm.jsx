@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { createRoom } from '../features/RoomsThunks';
 import {
   FormContainer,
   FormTitle,
@@ -17,6 +19,7 @@ import {
 
 const NewRoomForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     id: "",
     photos: [],
@@ -75,9 +78,7 @@ const NewRoomForm = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     formData.id = `#${Math.floor(Math.random() * 1000000)}`;
-    const rooms = JSON.parse(localStorage.getItem('rooms')) || [];
-    rooms.push(formData);
-    localStorage.setItem('rooms', JSON.stringify(rooms));
+    dispatch(createRoom(formData));
     navigate("/rooms");
   };
 

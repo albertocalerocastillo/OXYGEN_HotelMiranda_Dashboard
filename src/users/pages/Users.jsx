@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchUsers } from '../features/UsersThunks';
 import { MdOutlineLocalPhone } from "react-icons/md";
 import {
   UsersStyled,
@@ -23,12 +25,13 @@ import {
   PaginationButton,
   DataInfoStyled
 } from "../components/UsersStyles";
-import usersData from '../components/usersData.json';
-
 import profilePhoto from '../../assets/perfil.jpg';
 
 const Users = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const users = useSelector((state) => state.users.users);
+
   const [activeTab, setActiveTab] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,12 +40,8 @@ const Users = () => {
   const usersPerPage = 10;
 
   useEffect(() => {
-    const storedUsers = JSON.parse(localStorage.getItem('users')) || [];
-    const allUsers = [...usersData, ...storedUsers];
-    setUsers(allUsers);
-  }, []);
-
-  const [users, setUsers] = useState([]);
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
@@ -150,7 +149,7 @@ const Users = () => {
       {currentUsers.map(user => (
         <UsersItemStyled key={user.id}>
           <UsersProfilePhotoStyled>
-            <img src={user.profilePhoto && user.profilePhoto.startsWith('http') ? user.profilePhoto : profilePhoto} alt="Profile" />
+            <img src={user.profilePhoto === "perfil.jpg" ? profilePhoto : user.profilePhoto} alt="Profile" />
           </UsersProfilePhotoStyled>
           <UsersItemNameStyled>
             {user.name}<br />

@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchBookings } from '../features/BookingsThunks';
 import {
   BookingsFirstRowItemStyled,
   BookingsFirstRowStyled,
@@ -23,7 +25,6 @@ import {
   BookingsMenuTextStyled,
   BookingsStyled
 } from "../components/BookingsStyles";
-import bookingsData from '../components/bookingsData.json';
 import photo from '../../assets/perfil.jpg';
 import { SlOptionsVertical } from "react-icons/sl";
 import { IoIosArrowDown } from "react-icons/io";
@@ -31,12 +32,12 @@ import { IoIosSearch } from "react-icons/io";
 
 const Bookings = () => {
   const navigate = useNavigate();
-  const [bookings, setBookings] = useState([]);
+  const dispatch = useDispatch();
+  const bookings = useSelector((state) => state.bookings.bookings);
 
   useEffect(() => {
-    // Cargar los datos desde bookingsData.json
-    setBookings(bookingsData);
-  }, []);
+    dispatch(fetchBookings());
+  }, [dispatch]);
 
   const handleViewNotes = (bookingId, status) => {
     if (status === "Booked") {

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchRooms } from '../features/RoomsThunks';
 import { MdOutlineSort } from "react-icons/md";
 import {
   RoomsStyled,
@@ -20,10 +22,12 @@ import {
   DataInfoStyled
 } from "../components/RoomsStyles";
 import RoomPhoto from '../../assets/perfil.jpg';
-import roomsData from '../components/roomsData.json';
 
 const Rooms = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const rooms = useSelector((state) => state.rooms.rooms);
+  
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOption, setSortOption] = useState("number");
@@ -32,12 +36,12 @@ const Rooms = () => {
   const roomsPerPage = 10;
 
   useEffect(() => {
-    const storedRooms = JSON.parse(localStorage.getItem('rooms')) || [];
-    const allRooms = [...roomsData, ...storedRooms];
-    setRooms(allRooms);
-  }, []);
+    dispatch(fetchRooms());
+  }, [dispatch]);
 
-  const [rooms, setRooms] = useState([]);
+  useEffect(() => {
+    console.log("Rooms state updated:", rooms);
+  }, [rooms]);
 
   const calculateOfferPrice = (price, discount) => {
     const priceValue = parseFloat(price.replace(/[^0-9.-]+/g, ""));
@@ -92,6 +96,10 @@ const Rooms = () => {
   const indexOfLastRoom = currentPage * roomsPerPage;
   const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
   const currentRooms = filteredRooms.slice(indexOfFirstRoom, indexOfLastRoom);
+
+  useEffect(() => {
+    console.log("Current Rooms:", currentRooms);
+  }, [currentRooms]);
 
   const totalPages = Math.ceil(filteredRooms.length / roomsPerPage);
 

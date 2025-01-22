@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from 'react-redux';
 import CryptoJS from "crypto-js";
+import { createUser } from '../features/UsersThunks';
 import {
   FormContainer,
   FormTitle,
@@ -18,6 +20,7 @@ import {
 
 const NewEmployeeForm = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [formData, setFormData] = useState({
     id: "",
     profilePhoto: "",
@@ -49,9 +52,7 @@ const NewEmployeeForm = () => {
     event.preventDefault();
     formData.id = `#${Math.floor(Math.random() * 1000000)}`;
     formData.password = CryptoJS.SHA256(formData.password).toString();
-    const users = JSON.parse(localStorage.getItem('users')) || [];
-    users.push(formData);
-    localStorage.setItem('users', JSON.stringify(users));
+    dispatch(createUser(formData));
     navigate("/users");
   };
 

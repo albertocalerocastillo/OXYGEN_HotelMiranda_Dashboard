@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchContacts, updateContact } from '../features/ContactThunks';
 import {
   ContactCardsContainer,
   CardsContainer,
@@ -24,16 +26,16 @@ import {
 } from "../components/ReviewsStyles";
 
 const Contact = ({ isSidebarVisible }) => {
+  const dispatch = useDispatch();
+  const contacts = useSelector((state) => state.contact.contacts);
+
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupContent, setPopupContent] = useState('');
   const [activeTab, setActiveTab] = useState("all");
-  const [allContacts, setAllContacts] = useState([
-    { date: "Nov 21th 2020 09:21 AM", id: "#000123456", customer: "James Sitepu", email: "jamesitepu@gmail.com", phone: "635 267 398", subject: "Dinner", comment: "Lorem ipsum dolor sit amet.", archived: false },
-    { date: "Nov 21th 2020 09:21 AM", id: "#000123457", customer: "Hendric Lukaku", email: "hendricklukaku@gamil.com", phone: "622 217 399", subject: "Food", comment: "Lorem ipsum dolor sit amet.", archived: false },
-    { date: "Nov 21th 2020 09:21 AM", id: "#000123458", customer: "Yosep Saragih", email: "yosepsaragih@gmail.com", phone: "619 001 934", subject: "Evening", comment: "Lorem ipsum dolor sit amet.", archived: false },
-    { date: "Nov 21th 2020 09:21 AM", id: "#000123459", customer: "Hendric Lukaku", email: "hendricklukaku@gamil.com", phone: "622 217 399", subject: "Food", comment: "Lorem ipsum dolor sit amet.", archived: false },
-    { date: "Nov 21th 2020 09:21 AM", id: "#000123450", customer: "James Sitepu", email: "jamesitepu@gmail.com", phone: "123-456-7890", subject: "Lorem", comment: "Lorem ipsum dolor sit amet.", archived: false },
-  ]);
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   const handleCardClick = (content) => {
     setPopupContent(content);
@@ -46,15 +48,17 @@ const Contact = ({ isSidebarVisible }) => {
   };
 
   const handleArchive = (id) => {
-    setAllContacts(allContacts.map(contact =>
-      contact.id === id ? { ...contact, archived: true } : contact
-    ));
+    const contact = contacts.find(contact => contact.id === id);
+    if (contact) {
+      dispatch(updateContact({ ...contact, archived: true }));
+    }
   };
 
   const handleUnarchive = (id) => {
-    setAllContacts(allContacts.map(contact =>
-      contact.id === id ? { ...contact, archived: false } : contact
-    ));
+    const contact = contacts.find(contact => contact.id === id);
+    if (contact) {
+      dispatch(updateContact({ ...contact, archived: false }));
+    }
   };
 
   const handleTabClick = (tab) => {
@@ -62,8 +66,8 @@ const Contact = ({ isSidebarVisible }) => {
   };
 
   const filteredContacts = activeTab === "all"
-    ? allContacts.filter(contact => !contact.archived)
-    : allContacts.filter(contact => contact.archived);
+    ? contacts.filter(contact => !contact.archived)
+    : contacts.filter(contact => contact.archived);
 
   return (
     <div style={{ marginLeft: isSidebarVisible ? "250px" : "70px", transition: "margin-left 0.3s ease" }}>
