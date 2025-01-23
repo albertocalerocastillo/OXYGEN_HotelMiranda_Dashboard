@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import BookingsData from '../components/bookingsData.json';
-import perfil from '../../assets/perfil.jpg';  // Importa la imagen correctamente
+import perfil from '../../assets/perfil.jpg';
 import {
   BookingsDetailsStyled,
   BookingsDetailsLeftStyled,
