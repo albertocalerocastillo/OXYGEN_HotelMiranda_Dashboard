@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useAuthContext } from '../../context/AuthContext';
 import {
   PageContainer,
   TitleBlock,
@@ -15,6 +16,7 @@ import {
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { dispatch } = useAuthContext();
 
   const MASTER_EMAIL = "alberto@gmail.com";
   const MASTER_PASSWORD = "alberto1234";
@@ -24,7 +26,10 @@ const Login = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (email === MASTER_EMAIL && password === MASTER_PASSWORD) {
-      localStorage.setItem("isAuthenticated", "true");
+      dispatch({
+        type: "login",
+        payload: { name: "Alberto", email: MASTER_EMAIL }
+      });
       alert("Login exitoso");
       navigate("/dashboard");
     } else {

@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useEffect } from "react";
+import React, { createContext, useReducer, useContext, useEffect } from "react";
 
 const initialState = {
   isAuthenticated: false,
@@ -56,4 +56,8 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuthContext = () => {
+  return useContext(AuthContext);
 };
