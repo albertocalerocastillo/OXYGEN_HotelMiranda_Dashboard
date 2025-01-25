@@ -27,7 +27,7 @@ import {
 
 const Contact = ({ isSidebarVisible }) => {
   const dispatch = useDispatch();
-  const contacts = useSelector((state) => state.contact.contacts);
+  const { contacts, status, error } = useSelector((state) => state.contact);
 
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupContent, setPopupContent] = useState('');
@@ -69,6 +69,34 @@ const Contact = ({ isSidebarVisible }) => {
     ? contacts.filter(contact => !contact.archived)
     : contacts.filter(contact => contact.archived);
 
+  let content;
+
+  if (status === 'loading') {
+    content = <p>Loading contacts...</p>;
+  } else if (status === 'succeeded') {
+    content = filteredContacts.sort((a, b) => new Date(b.date) - new Date(a.date)).map(contact => (
+      <ReviewsItemStyled key={contact.id}>
+        <ReviewsItemDateStyled>
+          {contact.date}<br />ID: {contact.id}
+        </ReviewsItemDateStyled>
+        <ReviewsItemCustomerStyled>
+          {contact.customer}<br />Email: {contact.email}<br />Teléfono: {contact.phone}
+        </ReviewsItemCustomerStyled>
+        <ReviewsItemTextStyled>{contact.subject}</ReviewsItemTextStyled>
+        <ReviewsItemReviewStyled>{contact.comment}</ReviewsItemReviewStyled>
+        <ReviewsItemActionsStyled>
+          {activeTab === "all" ? (
+            <ReviewsButtonStyled onClick={() => handleArchive(contact.id)}>Archive</ReviewsButtonStyled>
+          ) : (
+            <ReviewsButtonStyled onClick={() => handleUnarchive(contact.id)}>Unarchive</ReviewsButtonStyled>
+          )}
+        </ReviewsItemActionsStyled>
+      </ReviewsItemStyled>
+    ));
+  } else if (status === 'failed') {
+    content = <p>{error}</p>;
+  }
+
   return (
     <div style={{ marginLeft: isSidebarVisible ? "250px" : "70px", transition: "margin-left 0.3s ease" }}>
       <ContactCardsContainer>
@@ -108,25 +136,7 @@ const Contact = ({ isSidebarVisible }) => {
           <ReviewsFirstRowItemStyled>Comment</ReviewsFirstRowItemStyled>
           <ReviewsFirstRowItemStyled>Action</ReviewsFirstRowItemStyled>
         </ReviewsFirstRowStyled>
-        {filteredContacts.sort((a, b) => new Date(b.date) - new Date(a.date)).map(contact => (
-          <ReviewsItemStyled key={contact.id}>
-            <ReviewsItemDateStyled>
-              {contact.date}<br />ID: {contact.id}
-            </ReviewsItemDateStyled>
-            <ReviewsItemCustomerStyled>
-              {contact.customer}<br />Email: {contact.email}<br />Teléfono: {contact.phone}
-            </ReviewsItemCustomerStyled>
-            <ReviewsItemTextStyled>{contact.subject}</ReviewsItemTextStyled>
-            <ReviewsItemReviewStyled>{contact.comment}</ReviewsItemReviewStyled>
-            <ReviewsItemActionsStyled>
-              {activeTab === "all" ? (
-                <ReviewsButtonStyled onClick={() => handleArchive(contact.id)}>Archive</ReviewsButtonStyled>
-              ) : (
-                <ReviewsButtonStyled onClick={() => handleUnarchive(contact.id)}>Unarchive</ReviewsButtonStyled>
-              )}
-            </ReviewsItemActionsStyled>
-          </ReviewsItemStyled>
-        ))}
+        {content}
       </ReviewsStyled>
     </div>
   );

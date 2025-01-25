@@ -26,8 +26,8 @@ import RoomPhoto from '../../assets/perfil.jpg';
 const Rooms = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const rooms = useSelector((state) => state.rooms.rooms);
-  
+  const { rooms, status, error } = useSelector((state) => state.rooms);
+
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOption, setSortOption] = useState("number");
@@ -118,6 +118,31 @@ const Rooms = () => {
   const showingEnd = Math.min(indexOfLastRoom, filteredRooms.length);
   const totalEntries = filteredRooms.length;
 
+  let content;
+
+  if (status === 'loading') {
+    content = <p>Loading rooms...</p>;
+  } else if (status === 'succeeded') {
+    content = currentRooms.map(room => (
+      <RoomsItemStyled key={room.id}>
+        <RoomsItemRoomProfileContainerStyled>
+          <RoomsItemRoomProfilePhotoStyled src={room.photo} />
+          <RoomsItemRoomProfileInfoStyled>
+            <RoomsItemRoomProfileIdStyled>{room.id}</RoomsItemRoomProfileIdStyled>
+            <RoomsItemTextStyled>{room.name} - {room.number}</RoomsItemTextStyled>
+          </RoomsItemRoomProfileInfoStyled>
+        </RoomsItemRoomProfileContainerStyled>
+        <RoomsItemTextStyled>{room.type}</RoomsItemTextStyled>
+        <RoomsItemTextStyled>{room.amenities}</RoomsItemTextStyled>
+        <RoomsItemTextStyled>{room.price} <span>/Night</span></RoomsItemTextStyled>
+        <RoomsItemTextStyled>{room.offerPrice}</RoomsItemTextStyled>
+        <RoomsItemStatusStyled type={room.status.toLowerCase()}>{room.status}</RoomsItemStatusStyled>
+      </RoomsItemStyled>
+    ));
+  } else if (status === 'failed') {
+    content = <p>{error}</p>;
+  }
+
   return (
     <RoomsStyled>
       <RoomsMenuStyled>
@@ -134,22 +159,7 @@ const Rooms = () => {
         <RoomsFirstRowItemStyled>Offer Price</RoomsFirstRowItemStyled>
         <RoomsFirstRowItemStyled onClick={() => handleSortOption("status")}>Status <MdOutlineSort /></RoomsFirstRowItemStyled>
       </RoomsFirstRowStyled>
-      {currentRooms.map(room => (
-        <RoomsItemStyled key={room.id}>
-          <RoomsItemRoomProfileContainerStyled>
-            <RoomsItemRoomProfilePhotoStyled src={room.photo} />
-            <RoomsItemRoomProfileInfoStyled>
-              <RoomsItemRoomProfileIdStyled>{room.id}</RoomsItemRoomProfileIdStyled>
-              <RoomsItemTextStyled>{room.name} - {room.number}</RoomsItemTextStyled>
-            </RoomsItemRoomProfileInfoStyled>
-          </RoomsItemRoomProfileContainerStyled>
-          <RoomsItemTextStyled>{room.type}</RoomsItemTextStyled>
-          <RoomsItemTextStyled>{room.amenities}</RoomsItemTextStyled>
-          <RoomsItemTextStyled>{room.price} <span>/Night</span></RoomsItemTextStyled>
-          <RoomsItemTextStyled>{room.offerPrice}</RoomsItemTextStyled>
-          <RoomsItemStatusStyled type={room.status.toLowerCase()}>{room.status}</RoomsItemStatusStyled>
-        </RoomsItemStyled>
-      ))}
+      {content}
       <PaginationContainer>
         <DataInfoStyled>
           Showing {showingEnd} of {totalEntries} Data

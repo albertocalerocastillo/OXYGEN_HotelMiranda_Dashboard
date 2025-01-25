@@ -30,7 +30,7 @@ import profilePhoto from '../../assets/perfil.jpg';
 const Users = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const users = useSelector((state) => state.users.users);
+  const { users, status, error } = useSelector((state) => state.users);
 
   const [activeTab, setActiveTab] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
@@ -99,6 +99,31 @@ const Users = () => {
   const showingEnd = Math.min(indexOfLastUser, filteredUsers.length);
   const totalEntries = filteredUsers.length;
 
+  let content;
+
+  if (status === 'loading') {
+    content = <p>Loading users...</p>;
+  } else if (status === 'succeeded') {
+    content = currentUsers.map(user => (
+      <UsersItemStyled key={user.id}>
+        <UsersProfilePhotoStyled>
+          <img src={user.profilePhoto === "perfil.jpg" ? profilePhoto : user.profilePhoto} alt="Profile" />
+        </UsersProfilePhotoStyled>
+        <UsersItemNameStyled>
+          {user.name}<br />
+          ID: {user.id}<br />
+          Email: {user.email}
+        </UsersItemNameStyled>
+        <UsersItemTextStyled>{user.joinDate}</UsersItemTextStyled>
+        <UsersItemJobStyled>{user.jobDesk}</UsersItemJobStyled>
+        <UsersItemContactStyled><MdOutlineLocalPhone style={{ marginRight: "0.5rem", fontSize: "1.5rem" }} /> {user.contact}</UsersItemContactStyled>
+        <UsersItemStatusStyled status={user.status}>{user.status}</UsersItemStatusStyled>
+      </UsersItemStyled>
+    ));
+  } else if (status === 'failed') {
+    content = <p>{error}</p>;
+  }
+
   return (
     <UsersStyled>
       <UsersMenuStyled>
@@ -146,22 +171,7 @@ const Users = () => {
         <UsersFirstRowItemStyled>Contact</UsersFirstRowItemStyled>
         <UsersFirstRowItemStyled>Status</UsersFirstRowItemStyled>
       </UsersFirstRowStyled>
-      {currentUsers.map(user => (
-        <UsersItemStyled key={user.id}>
-          <UsersProfilePhotoStyled>
-            <img src={user.profilePhoto === "perfil.jpg" ? profilePhoto : user.profilePhoto} alt="Profile" />
-          </UsersProfilePhotoStyled>
-          <UsersItemNameStyled>
-            {user.name}<br />
-            ID: {user.id}<br />
-            Email: {user.email}
-          </UsersItemNameStyled>
-          <UsersItemTextStyled>{user.joinDate}</UsersItemTextStyled>
-          <UsersItemJobStyled>{user.jobDesk}</UsersItemJobStyled>
-          <UsersItemContactStyled><MdOutlineLocalPhone style={{ marginRight: "0.5rem", fontSize: "1.5rem" }} /> {user.contact}</UsersItemContactStyled>
-          <UsersItemStatusStyled status={user.status}>{user.status}</UsersItemStatusStyled>
-        </UsersItemStyled>
-      ))}
+      {content}
       <PaginationContainer>
         <DataInfoStyled>
           Showing {showingEnd} of {totalEntries} Data

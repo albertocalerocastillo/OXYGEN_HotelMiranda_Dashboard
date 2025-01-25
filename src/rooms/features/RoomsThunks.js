@@ -1,53 +1,27 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-const initialRooms = [
-  {
-    id: "#0001234",
-    photo: "perfil.jpg",
-    number: "91234",
-    name: "Deluxe A",
-    type: "Double Bed",
-    amenities: "AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi",
-    price: "$125",
-    offerPrice: "$80",
-    status: "Available"
-  },
-  {
-    id: "#000123457",
-    photo: "perfil.jpg",
-    number: "91234",
-    name: "Deluxe A",
-    type: "Double Bed",
-    amenities: "AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi",
-    price: "$160",
-    offerPrice: "$100",
-    status: "Booked"
-  },
-  {
-    id: "#000123458",
-    photo: "perfil.jpg",
-    number: "91234",
-    name: "Deluxe A",
-    type: "Double Bed",
-    amenities: "AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi",
-    price: "$145",
-    offerPrice: "$90",
-    status: "Available"
-  }
-];
-
 export const fetchRooms = createAsyncThunk('rooms/fetchRooms', async () => {
+  const response = await fetch('/data/roomsData.json');
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  const data = await response.json();
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(initialRooms);
+      resolve(data);
     }, 200);
   });
 });
 
 export const fetchRoomById = createAsyncThunk('rooms/fetchRoomById', async (id) => {
+  const response = await fetch('/data/roomsData.json');
+  if (!response.ok) {
+    throw new Error('Network response was not ok');
+  }
+  const data = await response.json();
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve({ id });
+      resolve(data.find(room => room.id === id));
     }, 200);
   });
 });
