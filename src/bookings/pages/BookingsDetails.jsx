@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import BookingsData from '../components/bookingsData.json';
+import BookingsData from '../../../public/data/bookingsData.json';
 import perfil from '../../assets/perfil.jpg';
 import {
   BookingsDetailsStyled,

@@ -33,7 +33,7 @@ import { IoIosSearch } from "react-icons/io";
 const Bookings = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const bookings = useSelector((state) => state.bookings.bookings);
+  const { bookings, status, error } = useSelector((state) => state.bookings);
 
   useEffect(() => {
     dispatch(fetchBookings());
@@ -44,6 +44,41 @@ const Bookings = () => {
       navigate(`/bookings/details/${bookingId}`);
     }
   };
+
+  let content;
+
+  if (status === 'loading') {
+    content = <p>Loading bookings...</p>;
+  } else if (status === 'succeeded') {
+    content = bookings.map((booking) => (
+      <BookingsItemStyled key={booking.id}>
+        <BookingsItemBookingsStyled>
+          <BookingsItemBookingsPhotoStyled src={photo} />
+          <BookingsItemBookingsInfoStyled>
+            <BookingsItemTextStyled>{booking.guest}</BookingsItemTextStyled>
+            <BookingsItemBookingsIdStyled>{booking.id}</BookingsItemBookingsIdStyled>
+          </BookingsItemBookingsInfoStyled>
+        </BookingsItemBookingsStyled>
+        <BookingsItemOrderDateStyled>{booking.orderDate}</BookingsItemOrderDateStyled>
+        <BookingsItemCheckStyled>
+          <BookingsItemTextStyled>{booking.checkInDate}</BookingsItemTextStyled>
+          <BookingsItemCheckHourStyled>{booking.checkInTime}</BookingsItemCheckHourStyled>
+        </BookingsItemCheckStyled>
+        <BookingsItemCheckStyled>
+          <BookingsItemTextStyled>{booking.checkOutDate}</BookingsItemTextStyled>
+          <BookingsItemCheckHourStyled>{booking.checkOutTime}</BookingsItemCheckHourStyled>
+        </BookingsItemCheckStyled>
+        <BookingsItemSpecialRequestStyled type={booking.specialRequestType} onClick={() => handleViewNotes(booking.id, booking.status)}>
+          {booking.specialRequest}
+        </BookingsItemSpecialRequestStyled>
+        <BookingsItemTextStyled>{booking.roomType}</BookingsItemTextStyled>
+        <BookingsItemStatusStyled type={booking.status.toLowerCase()}>{booking.status}</BookingsItemStatusStyled>
+        <SlOptionsVertical />
+      </BookingsItemStyled>
+    ));
+  } else if (status === 'failed') {
+    content = <p>{error}</p>;
+  }
 
   return (
     <BookingsStyled>
@@ -72,32 +107,7 @@ const Bookings = () => {
         <BookingsFirstRowItemStyled>Room Type</BookingsFirstRowItemStyled>
         <BookingsFirstRowItemStyled>Status</BookingsFirstRowItemStyled>
       </BookingsFirstRowStyled>
-      {bookings.map((booking) => (
-        <BookingsItemStyled key={booking.id}>
-          <BookingsItemBookingsStyled>
-            <BookingsItemBookingsPhotoStyled src={photo} />
-            <BookingsItemBookingsInfoStyled>
-              <BookingsItemTextStyled>{booking.guest}</BookingsItemTextStyled>
-              <BookingsItemBookingsIdStyled>{booking.id}</BookingsItemBookingsIdStyled>
-            </BookingsItemBookingsInfoStyled>
-          </BookingsItemBookingsStyled>
-          <BookingsItemOrderDateStyled>{booking.orderDate}</BookingsItemOrderDateStyled>
-          <BookingsItemCheckStyled>
-            <BookingsItemTextStyled>{booking.checkInDate}</BookingsItemTextStyled>
-            <BookingsItemCheckHourStyled>{booking.checkInTime}</BookingsItemCheckHourStyled>
-          </BookingsItemCheckStyled>
-          <BookingsItemCheckStyled>
-            <BookingsItemTextStyled>{booking.checkOutDate}</BookingsItemTextStyled>
-            <BookingsItemCheckHourStyled>{booking.checkOutTime}</BookingsItemCheckHourStyled>
-          </BookingsItemCheckStyled>
-          <BookingsItemSpecialRequestStyled type={booking.specialRequestType} onClick={() => handleViewNotes(booking.id, booking.status)}>
-            {booking.specialRequest}
-          </BookingsItemSpecialRequestStyled>
-          <BookingsItemTextStyled>{booking.roomType}</BookingsItemTextStyled>
-          <BookingsItemStatusStyled type={booking.status.toLowerCase()}>{booking.status}</BookingsItemStatusStyled>
-          <SlOptionsVertical />
-        </BookingsItemStyled>
-      ))}
+      {content}
     </BookingsStyled>
   );
 };
