@@ -1,5 +1,5 @@
-import React, { useState, useContext } from "react";
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import React, { useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store/store';
 import PrivateRoute from "./login/components/PrivateRoute";
@@ -27,7 +27,8 @@ function App() {
       <Provider store={store}>
         <BrowserRouter>
           <Routes>
-            <Route path='' element={<Login />} />
+            <Route path="/" element={<Navigate to="/login" replace />} />
+            <Route path="/login" element={<Login />} />
             <Route
               element={
                 <Layout

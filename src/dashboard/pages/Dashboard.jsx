@@ -20,7 +20,10 @@ import Calendar from "../components/Calendar";
 
 const Dashboard = ({ isSidebarVisible }) => {
   return (
-    <div style={{ marginLeft: isSidebarVisible ? "250px" : "70px", transition: "margin-left 0.3s ease" }}>
+    <div 
+      style={{ marginLeft: isSidebarVisible ? "250px" : "70px", transition: "margin-left 0.3s ease" }} 
+      data-cy="dashboard"
+    >
       <BoxContainer>
         <ChildDivContainer>
           <ChildDivColor bgcolor={"#FFEDEC"}>

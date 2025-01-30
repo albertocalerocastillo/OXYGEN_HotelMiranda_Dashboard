@@ -51,7 +51,7 @@ const Bookings = () => {
     content = <p>Loading bookings...</p>;
   } else if (status === 'succeeded') {
     content = bookings.map((booking) => (
-      <BookingsItemStyled key={booking.id}>
+      <BookingsItemStyled key={booking.id} data-cy="bookingItem">
         <BookingsItemBookingsStyled>
           <BookingsItemBookingsPhotoStyled src={photo} />
           <BookingsItemBookingsInfoStyled>
@@ -81,7 +81,7 @@ const Bookings = () => {
   }
 
   return (
-    <BookingsStyled>
+    <BookingsStyled data-cy="bookings">
       <BookingsMenuStyled>
         <BookingsMenuTextStyled>
           <BookingsMenuItemStyled>All Bookings</BookingsMenuItemStyled>

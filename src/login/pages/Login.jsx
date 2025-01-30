@@ -53,6 +53,7 @@ const Login = () => {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Introduce tu email"
               required
+              data-cy="emailInput"
             />
           </Label>
           <Label>
@@ -63,9 +64,10 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Introduce tu contraseña"
               required
+              data-cy="passwordInput"
             />
           </Label>
-          <Button type="submit">Entrar</Button>
+          <Button type="submit" data-cy="submitButton">Entrar</Button>
         </Form>
       </FormBlock>
 
