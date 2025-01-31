@@ -33,7 +33,8 @@ const roomsSlice = createSlice({
       })
       .addCase(createRoom.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.rooms.push(action.payload);
+        console.log(action.payload)
+        state.rooms  = [...state.rooms,action.payload]
       })
       .addCase(createRoom.rejected, (state, action) => {
         state.status = 'failed';
