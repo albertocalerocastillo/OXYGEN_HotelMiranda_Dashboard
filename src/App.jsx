@@ -13,7 +13,7 @@ import Contact from "./contact/pages/Contact";
 import Users from "./users/pages/Users";
 import NewEmployeeForm from "./users/pages/NewEmployeeForm";
 import BookingsDetails from "./bookings/pages/BookingsDetails";
-import { AuthProvider, AuthContext } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
