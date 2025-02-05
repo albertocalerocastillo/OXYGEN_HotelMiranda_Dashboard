@@ -65,9 +65,9 @@ export const FormTextarea = styled.textarea`
 `;
 
 export const FormStatus = styled.div`
-    color: black;
-    display: flex;
-    gap: 1rem;
+  color: black;
+  display: flex;
+  gap: 1rem;
 `;
 
 export const FormButton = styled.button`

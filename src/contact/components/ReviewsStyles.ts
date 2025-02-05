@@ -1,4 +1,8 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+interface ReviewsMenuItemProps {
+  active: boolean;
+}
 
 export const ReviewsStyled = styled.div`
   display: flex;
@@ -21,7 +25,7 @@ export const ReviewsMenuTextStyled = styled.div`
   gap: 2rem;
 `;
 
-export const ReviewsMenuItemStyled = styled.p`
+export const ReviewsMenuItemStyled = styled.p<ReviewsMenuItemProps>`
   font-family: 'Poppins';
   font-weight: 600;
   font-size: 1rem;
@@ -41,7 +45,7 @@ export const ReviewsFirstRowStyled = styled.div`
   padding: 1rem 6rem;
 `;
 
-export const ReviewsFirstRowItemStyled = styled.p`
+export const ReviewsFirstRowItemStyled = styled.p<{ fullWidth?: boolean }>`
   font-family: 'Poppins';
   font-size: 1rem;
   font-weight: 700;
@@ -64,7 +68,7 @@ export const ReviewsItemStyled = styled.div`
   }
 `;
 
-export const ReviewsItemTextStyled = styled.p`
+export const ReviewsItemTextStyled = styled.p<{ fullWidth?: boolean }>`
   font-family: 'Poppins';
   font-size: 1rem;
   font-weight: 600;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import CryptoJS from "crypto-js";
@@ -17,12 +17,14 @@ import {
   FormStatus,
   BackButton
 } from "../components/NewEmployeeFormStyles";
+import { FormData } from '../interfaces/NewEmployeeFormInterfaces';
+import { AppDispatch } from '../../store/store';
+import { User } from '../interfaces/UserInterfaces';
 
-const NewEmployeeForm = () => {
+const NewEmployeeForm: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [formData, setFormData] = useState({
-    id: "",
+  const dispatch: AppDispatch = useDispatch();
+  const [formData, setFormData] = useState<Omit<FormData, 'id'>>({
     profilePhoto: "",
     name: "",
     job: "Manager",
@@ -34,25 +36,30 @@ const NewEmployeeForm = () => {
     password: ""
   });
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handlePhotoChange = (event) => {
-    const file = event.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setFormData({ ...formData, profilePhoto: reader.result });
-    };
-    reader.readAsDataURL(file);
+  const handlePhotoChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData({ ...formData, profilePhoto: reader.result as string });
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: FormEvent) => {
     event.preventDefault();
-    formData.id = `#${Math.floor(Math.random() * 1000000)}`;
-    formData.password = CryptoJS.SHA256(formData.password).toString();
-    dispatch(createUser(formData));
+    const newUser: User = {
+      ...formData,
+      id: Math.floor(Math.random() * 1000000),
+      password: CryptoJS.SHA256(formData.password).toString()
+    };
+    dispatch(createUser(newUser));
     navigate("/users");
   };
 
