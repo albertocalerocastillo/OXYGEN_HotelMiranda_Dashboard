@@ -4,9 +4,11 @@ export interface User {
   email: string;
   profilePhoto: string;
   joinDate: string;
+  job: string;
   jobDesk: string;
   contact: string;
   status: 'ACTIVE' | 'INACTIVE';
+  password: string;
 }
 
 export interface UsersState {
