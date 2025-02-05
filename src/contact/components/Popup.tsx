@@ -2,7 +2,12 @@ import React from 'react';
 import { PopupContainer, PopupContent, CloseButton } from './PopupStyles';
 import { GiCancel } from 'react-icons/gi';
 
-const Popup = ({ content, onClose }) => {
+interface PopupProps {
+  content: string;
+  onClose: () => void;
+}
+
+const Popup: React.FC<PopupProps> = ({ content, onClose }) => {
   return (
     <PopupContainer>
       <PopupContent>
