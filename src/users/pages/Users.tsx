@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUsers } from '../features/UsersThunks';
@@ -26,16 +26,18 @@ import {
   DataInfoStyled
 } from "../components/UsersStyles";
 import profilePhoto from '../../assets/perfil.jpg';
+import { User, UsersState } from '../interfaces/UserInterfaces';
+import { RootState, AppDispatch } from '../../store/store';
 
-const Users = () => {
+const Users: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const { users, status, error } = useSelector((state) => state.users);
+  const dispatch: AppDispatch = useDispatch();
+  const { users, status, error } = useSelector((state: RootState) => state.users);
 
-  const [activeTab, setActiveTab] = useState("all");
-  const [searchTerm, setSearchTerm] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [sortOption, setSortOption] = useState("date");
+  const [activeTab, setActiveTab] = useState<string>("all");
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [sortOption, setSortOption] = useState<string>("date");
 
   const usersPerPage = 10;
 
@@ -43,27 +45,27 @@ const Users = () => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  const handleSearch = (event) => {
+  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
     setCurrentPage(1);
   };
 
-  const handleSortOption = (event) => {
+  const handleSortOption = (event: ChangeEvent<HTMLSelectElement>) => {
     setSortOption(event.target.value);
   };
 
-  const handleTabChange = (tab) => {
+  const handleTabChange = (tab: string) => {
     setActiveTab(tab);
     setCurrentPage(1);
   };
 
-  const parseDate = (dateString) => {
-    const months = {
+  const parseDate = (dateString: string): Date => {
+    const months: { [key: string]: number } = {
       Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
       Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11
     };
     const [month, day, year] = dateString.split(" ");
-    return new Date(year, months[month], parseInt(day));
+    return new Date(parseInt(year), months[month], parseInt(day));
   };
 
   const filteredUsers = users
@@ -75,7 +77,7 @@ const Users = () => {
       if (sortOption === "name") {
         return a.name.localeCompare(b.name);
       }
-      return parseDate(a.joinDate) - parseDate(b.joinDate);
+      return parseDate(a.joinDate).getTime() - parseDate(b.joinDate).getTime();
     });
 
   const indexOfLastUser = currentPage * usersPerPage;
@@ -104,7 +106,7 @@ const Users = () => {
   if (status === 'loading') {
     content = <p>Loading users...</p>;
   } else if (status === 'succeeded') {
-    content = currentUsers.map(user => (
+    content = currentUsers.map((user: User) => (
       <UsersItemStyled key={user.id}>
         <UsersProfilePhotoStyled>
           <img src={user.profilePhoto === "perfil.jpg" ? profilePhoto : user.profilePhoto} alt="Profile" />

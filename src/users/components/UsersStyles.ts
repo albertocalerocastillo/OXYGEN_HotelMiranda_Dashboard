@@ -1,4 +1,8 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
+
+interface UsersMenuItemStyledProps {
+  active?: boolean;
+}
 
 export const UsersStyled = styled.div`
   display: flex;
@@ -25,7 +29,7 @@ export const UsersMenuTextStyled = styled.div`
   gap: 2rem;
 `;
 
-export const UsersMenuItemStyled = styled.p`
+export const UsersMenuItemStyled = styled.p<UsersMenuItemStyledProps>`
   font-family: 'Poppins';
   font-weight: 600;
   font-size: 1rem;
@@ -118,7 +122,11 @@ export const UsersItemContactStyled = styled(UsersItemTextStyled)`
   flex: 2;
 `;
 
-export const UsersItemStatusStyled = styled(UsersItemTextStyled)`
+interface UsersItemStatusStyledProps {
+  status: 'ACTIVE' | 'INACTIVE';
+}
+
+export const UsersItemStatusStyled = styled(UsersItemTextStyled)<UsersItemStatusStyledProps>`
   flex: 1;
   color: ${props => (props.status === "ACTIVE" ? "#5AD07A" : "#E23428")};
 `;
