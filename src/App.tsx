@@ -15,7 +15,7 @@ import NewEmployeeForm from "./users/pages/NewEmployeeForm";
 import BookingsDetails from "./bookings/pages/BookingsDetails";
 import { AuthProvider } from "./context/AuthContext";
 
-function App() {
+const App: React.FC = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
   const toggleSidebar = () => {
@@ -37,12 +37,12 @@ function App() {
                 />
               }
             >
-              <Route path='/dashboard' element={<PrivateRoute element={<Dashboard />} />} />
+              <Route path='/dashboard' element={<PrivateRoute element={<Dashboard isSidebarVisible={isSidebarVisible} />} />} />
               <Route path='/bookings' element={<PrivateRoute element={<Bookings />} />} />
               <Route path='/bookings/:bookingId' element={<PrivateRoute element={<BookingsDetails />} />} />
               <Route path='/rooms' element={<PrivateRoute element={<Rooms />} />} />
               <Route path='/new-room' element={<PrivateRoute element={<NewRoomForm />} />} />
-              <Route path='/contact' element={<PrivateRoute element={<Contact />} />} />
+              <Route path='/contact' element={<PrivateRoute element={<Contact isSidebarVisible={isSidebarVisible} />} />} />
               <Route path='/users' element={<PrivateRoute element={<Users />} />} />
               <Route path='/new-employee' element={<PrivateRoute element={<NewEmployeeForm />} />} />
             </Route>
