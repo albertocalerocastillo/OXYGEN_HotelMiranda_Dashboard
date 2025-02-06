@@ -16,11 +16,13 @@ import {
   FormPhotoInput,
   BackButton
 } from "../components/NewRoomFormStyles";
+import { AppDispatch } from '../../store/store';
+import { Room } from '../interfaces/RoomInterfaces';
 
-const NewRoomForm = () => {
+const NewRoomForm: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const [formData, setFormData] = useState({
+  const dispatch: AppDispatch = useDispatch();
+  const [formData, setFormData] = useState<Room>({
     id: "",
     photos: [],
     number: "",
@@ -28,57 +30,57 @@ const NewRoomForm = () => {
     type: "Double Bed",
     description: "",
     offer: "NO",
-    price: "",
-    discount: "",
+    price: 0,
+    discount: 0,
     offerPrice: "",
     cancellation: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum",
-    amenities: "",
+    amenities: [],
     status: "Available"
   });
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
 
     if (name === "price" || name === "discount") {
-      const newOfferPrice = calculateOfferPrice(formData.price, formData.discount);
+      const newOfferPrice = calculateOfferPrice(Number(formData.price), Number(formData.discount));
       setFormData({ ...formData, offerPrice: newOfferPrice, [name]: value });
     }
   };
 
-  const handlePhotoChange = (event) => {
-    const files = Array.from(event.target.files);
+  const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(event.target.files || []);
     if (files.length < 3 || files.length > 5) {
       alert("Please select between 3 and 5 photos.");
       return;
     }
-    const photos = files.map(file => {
+    const photos: string[] = [];
+    files.forEach(file => {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
+        photos.push(reader.result as string);
         setFormData(prevState => ({
           ...prevState,
-          photos: [...prevState.photos, reader.result]
+          photos
         }));
       };
-      return file;
     });
   };
 
-  const calculateOfferPrice = (price, discount) => {
-    const priceValue = parseFloat(price);
-    const discountValue = parseFloat(discount);
-    if (isNaN(priceValue) || isNaN(discountValue)) {
+  const calculateOfferPrice = (price: number, discount: number) => {
+    if (isNaN(price) || isNaN(discount)) {
       return "";
     }
-    const offerPriceValue = priceValue - (priceValue * (discountValue / 100));
+    const offerPriceValue = price - (price * (discount / 100));
     return offerPriceValue.toFixed(2);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    formData.id = `#${Math.floor(Math.random() * 1000000)}`;
-    dispatch(createRoom(formData));
+    const roomId = `#${Math.floor(Math.random() * 1000000)}`;
+    const roomData = { ...formData, id: roomId };
+    dispatch(createRoom(roomData));
     navigate("/rooms");
   };
 
@@ -139,7 +141,7 @@ const NewRoomForm = () => {
       </FormField>
       <FormField>
         <FormLabel>Amenities</FormLabel>
-        <FormSelect name="amenities" value={formData.amenities} onChange={handleInputChange}>
+        <FormSelect name="amenities" value={formData.amenities.join(', ')} onChange={handleInputChange}>
           <FormOption value="AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi">AC, Shower, Double Bed, Towel, Bathup, Coffee Set, LED TV, Wifi</FormOption>
           <FormOption value="Bathtub, Sea View, WiFi, Coffee Set">Bathtub, Sea View, WiFi, Coffee Set</FormOption>
           <FormOption value="Shower, Single Bed, Towel, TV, Wifi">Shower, Single Bed, Towel, TV, Wifi</FormOption>
