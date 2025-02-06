@@ -12,10 +12,10 @@ import {
   MasterCredentialsBlock,
   Title,
 } from "../components/LoginStyles";
+import { Credentials } from '../interfaces/LoginInterfaces';
 
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Login: React.FC = () => {
+  const [credentials, setCredentials] = useState<Credentials>({ email: "", password: "" });
   const { login } = useAuth();
 
   const MASTER_EMAIL = "alberto@gmail.com";
@@ -23,8 +23,13 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const { email, password } = credentials;
     if (email === MASTER_EMAIL && password === MASTER_PASSWORD) {
       login({ name: "Alberto", email: MASTER_EMAIL });
       alert("Login exitoso");
@@ -46,8 +51,9 @@ const Login = () => {
             Email:
             <Input
               type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              name="email"
+              value={credentials.email}
+              onChange={handleChange}
               placeholder="Introduce tu email"
               required
               data-cy="emailInput"
@@ -57,8 +63,9 @@ const Login = () => {
             Contraseña:
             <Input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              name="password"
+              value={credentials.password}
+              onChange={handleChange}
               placeholder="Introduce tu contraseña"
               required
               data-cy="passwordInput"
