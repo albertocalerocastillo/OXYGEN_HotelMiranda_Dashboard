@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+interface StatusProps {
+  status: string;
+}
+
 export const BookingsDetailsStyled = styled.div`
   display: flex;
   flex-direction: row;
@@ -153,7 +157,7 @@ export const BookingsDetailsPhotoDescriptionStyled = styled.p`
   margin-top: 0.5rem;
 `;
 
-export const BookingStatusStyled = styled.div`
+export const BookingStatusStyled = styled.div<StatusProps>`
   font-family: 'Poppins', sans-serif;
   font-weight: 600;
   font-size: 1.2rem;

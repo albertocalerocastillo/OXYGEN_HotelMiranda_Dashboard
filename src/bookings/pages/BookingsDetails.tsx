@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { Booking } from '../interfaces/BookingInterfaces';
 import BookingsData from '../../../public/data/bookingsData.json';
 import perfil from '../../assets/perfil.jpg';
 import {
@@ -24,13 +25,13 @@ import {
   BookingStatusStyled
 } from '../components/BookingsDetailsStyles';
 
-const BookingsDetails = () => {
-  const [booking, setBooking] = useState({});
-  const { bookingId } = useParams();
+const BookingsDetails: React.FC = () => {
+  const [booking, setBooking] = useState<Booking | null>(null);
+  const { bookingId } = useParams<{ bookingId: string }>();
 
   useEffect(() => {
-    const selectedBooking = BookingsData.find((booking) => booking.id === bookingId);
-    setBooking(selectedBooking);
+    const selectedBooking = BookingsData.find((booking: Booking) => booking.id === bookingId);
+    setBooking(selectedBooking || null);
   }, [bookingId]);
 
   return (
