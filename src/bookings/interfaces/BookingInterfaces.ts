@@ -10,9 +10,9 @@ export interface Booking {
     specialRequest: string;
     specialRequestType: string;
     roomType: string;
-    roomNumber?: string;  // Propiedad opcional
-    price?: string;       // Propiedad opcional
-    description?: string; // Propiedad opcional
+    roomNumber?: string;
+    price?: string;
+    description?: string;
   }
     
   export interface BookingsState {
@@ -20,5 +20,4 @@ export interface Booking {
     booking: Booking | null;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
     error: string | null;
-  }
-  
+}
