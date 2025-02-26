@@ -1,11 +1,15 @@
-import styled from "styled-components";
+import styled from 'styled-components';
+
+interface StatusProps {
+  type?: string;
+}
 
 export const BookingsStyled = styled.div`
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 2rem;
-    display: flex;
-    flex-direction: column;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: flex;
+  flex-direction: column;
 `;
 
 export const BookingsMenuStyled = styled.div`
@@ -179,10 +183,10 @@ export const BookingsItemCheckHourStyled = styled.p`
   font-size: .875rem;
   font-weight: 500;
   color: #393939;
-  margin: 0; 
+  margin: 0;
 `;
 
-export const BookingsItemSpecialRequestStyled = styled.button`
+export const BookingsItemSpecialRequestStyled = styled.button<StatusProps>`
   padding: .8rem 1.5rem;
   cursor: pointer;
   color: ${props =>
@@ -201,7 +205,7 @@ export const BookingsItemSpecialRequestStyled = styled.button`
   text-align: center;
 `;
 
-export const BookingsItemStatusStyled = styled.button`
+export const BookingsItemStatusStyled = styled.button<StatusProps>`
   cursor: pointer;
   background: ${props => 
     props.type === 'booked' ? '#E8FFEE' : 

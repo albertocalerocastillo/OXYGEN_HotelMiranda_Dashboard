@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Room } from '../interfaces/RoomInterfaces';
+import { Booking } from '../interfaces/BookingInterfaces';
 
-export const fetchRooms = createAsyncThunk<Room[]>(
-  'rooms/fetchRooms',
+export const fetchBookings = createAsyncThunk<Booking[]>(
+  'bookings/fetchBookings',
   async (_, { rejectWithValue }) => {
     try {
       const apiUrl = 'http://localhost:3001';
@@ -15,7 +15,7 @@ export const fetchRooms = createAsyncThunk<Room[]>(
         throw new Error('Token is not available');
       }
 
-      const response = await fetch(`${apiUrl}/rooms`, {
+      const response = await fetch(`${apiUrl}/bookings`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -25,17 +25,17 @@ export const fetchRooms = createAsyncThunk<Room[]>(
         throw new Error('Network response was not ok');
       }
 
-      const data: Room[] = await response.json();
+      const data: Booking[] = await response.json();
       return data;
     } catch (error) {
-      console.error('Error fetching rooms:', error);
-      return rejectWithValue('Failed to fetch rooms');
+      console.error('Error fetching bookings:', error);
+      return rejectWithValue('Failed to fetch bookings');
     }
   }
 );
 
-export const fetchRoomById = createAsyncThunk<Room | null, string>(
-  'rooms/fetchRoomById',
+export const fetchBookingById = createAsyncThunk<Booking | null, string>(
+  'bookings/fetchBookingById',
   async (id: string, { rejectWithValue }) => {
     try {
       const apiUrl = 'http://localhost:3001';
@@ -48,7 +48,7 @@ export const fetchRoomById = createAsyncThunk<Room | null, string>(
         throw new Error('Token is not available');
       }
 
-      const response = await fetch(`${apiUrl}/rooms/${id}`, {
+      const response = await fetch(`${apiUrl}/bookings/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -58,18 +58,18 @@ export const fetchRoomById = createAsyncThunk<Room | null, string>(
         throw new Error('Network response was not ok');
       }
 
-      const data: Room = await response.json();
+      const data: Booking = await response.json();
       return data;
     } catch (error) {
-      console.error('Error fetching room by ID:', error);
-      return rejectWithValue('Failed to fetch room by ID');
+      console.error('Error fetching booking by ID:', error);
+      return rejectWithValue('Failed to fetch booking by ID');
     }
   }
 );
 
-export const createRoom = createAsyncThunk<Room, Room>(
-  'rooms/createRoom',
-  async (newRoom: Room, { rejectWithValue }) => {
+export const createBooking = createAsyncThunk<Booking, Booking>(
+  'bookings/createBooking',
+  async (newBooking: Booking, { rejectWithValue }) => {
     try {
       const apiUrl = 'http://localhost:3001';
       if (!apiUrl) {
@@ -81,31 +81,31 @@ export const createRoom = createAsyncThunk<Room, Room>(
         throw new Error('Token is not available');
       }
 
-      const response = await fetch(`${apiUrl}/rooms`, {
+      const response = await fetch(`${apiUrl}/bookings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(newRoom),
+        body: JSON.stringify(newBooking),
       });
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
 
-      const data: Room = await response.json();
+      const data: Booking = await response.json();
       return data;
     } catch (error) {
-      console.error('Error creating room:', error);
-      return rejectWithValue('Failed to create room');
+      console.error('Error creating booking:', error);
+      return rejectWithValue('Failed to create booking');
     }
   }
 );
 
-export const updateRoom = createAsyncThunk<Room, Room>(
-  'rooms/updateRoom',
-  async (updatedRoom: Room, { rejectWithValue }) => {
+export const updateBooking = createAsyncThunk<Booking, Booking>(
+  'bookings/updateBooking',
+  async (updatedBooking: Booking, { rejectWithValue }) => {
     try {
       const apiUrl = 'http://localhost:3001';
       if (!apiUrl) {
@@ -117,30 +117,30 @@ export const updateRoom = createAsyncThunk<Room, Room>(
         throw new Error('Token is not available');
       }
 
-      const response = await fetch(`${apiUrl}/rooms/${updatedRoom.id}`, {
+      const response = await fetch(`${apiUrl}/bookings/${updatedBooking.id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify(updatedRoom),
+        body: JSON.stringify(updatedBooking),
       });
 
       if (!response.ok) {
         throw new Error('Network response was not ok');
       }
 
-      const data: Room = await response.json();
+      const data: Booking = await response.json();
       return data;
     } catch (error) {
-      console.error('Error updating room:', error);
-      return rejectWithValue('Failed to update room');
+      console.error('Error updating booking:', error);
+      return rejectWithValue('Failed to update booking');
     }
   }
 );
 
-export const deleteRoom = createAsyncThunk<string, string>(
-  'rooms/deleteRoom',
+export const deleteBooking = createAsyncThunk<string, string>(
+  'bookings/deleteBooking',
   async (id: string, { rejectWithValue }) => {
     try {
       const apiUrl = 'http://localhost:3001';
@@ -153,7 +153,7 @@ export const deleteRoom = createAsyncThunk<string, string>(
         throw new Error('Token is not available');
       }
 
-      const response = await fetch(`${apiUrl}/rooms/${id}`, {
+      const response = await fetch(`${apiUrl}/bookings/${id}`, {
         method: 'DELETE',
         headers: {
           Authorization: `Bearer ${token}`,
@@ -166,8 +166,8 @@ export const deleteRoom = createAsyncThunk<string, string>(
 
       return id;
     } catch (error) {
-      console.error('Error deleting room:', error);
-      return rejectWithValue('Failed to delete room');
+      console.error('Error deleting booking:', error);
+      return rejectWithValue('Failed to delete booking');
     }
   }
 );
