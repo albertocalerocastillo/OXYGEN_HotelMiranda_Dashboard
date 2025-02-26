@@ -26,7 +26,7 @@ const Dashboard: React.FC<DashboardProps> = ({ isSidebarVisible }) => {
   const [newBookings, setNewBookings] = useState(0);
   const [scheduledRooms, setScheduledRooms] = useState(0);
   const [checkIns, setCheckIns] = useState(0);
-  const [checkOuts, setCheckOuts] = useState(0);
+  const [checkOuts, setCheckOuts] = useState(0);//cambiar y tipar todos los useState
 
   useEffect(() => {
     setNewBookings(8461);

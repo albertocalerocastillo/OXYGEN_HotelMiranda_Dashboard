@@ -1,111 +1,173 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Contact } from '../interfaces/ContactInterfaces';
 
-const initialContacts: Contact[] = [
-  {
-    id: "#000123456",
-    date: "Nov 21th 2020 09:21 AM",
-    customer: "James Sitepu",
-    email: "jamesitepu@gmail.com",
-    phone: "635 267 398",
-    subject: "Dinner",
-    comment: "Lorem ipsum dolor sit amet.",
-    archived: false
-  },
-  {
-    id: "#000123457",
-    date: "Nov 21th 2020 09:21 AM",
-    customer: "Hendric Lukaku",
-    email: "hendricklukaku@gamil.com",
-    phone: "622 217 399",
-    subject: "Food",
-    comment: "Lorem ipsum dolor sit amet.",
-    archived: false
-  },
-  {
-    id: "#000123458",
-    date: "Nov 21th 2020 09:21 AM",
-    customer: "Yosep Saragih",
-    email: "yosepsaragih@gmail.com",
-    phone: "619 001 934",
-    subject: "Evening",
-    comment: "Lorem ipsum dolor sit amet.",
-    archived: false
-  },
-  {
-    id: "#000123459",
-    date: "Nov 21th 2020 09:21 AM",
-    customer: "Hendric Lukaku",
-    email: "hendricklukaku@gamil.com",
-    phone: "622 217 399",
-    subject: "Food",
-    comment: "Lorem ipsum dolor sit amet.",
-    archived: false
-  },
-  {
-    id: "#000123450",
-    date: "Nov 21th 2020 09:21 AM",
-    customer: "James Sitepu",
-    email: "jamesitepu@gmail.com",
-    phone: "123-456-7890",
-    subject: "Lorem",
-    comment: "Lorem ipsum dolor sit amet.",
-    archived: false
-  }
-];
-
 export const fetchContacts = createAsyncThunk<Contact[]>(
   'contact/fetchContacts',
-  async () => {
-    return new Promise<Contact[]>((resolve) => {
-      setTimeout(() => {
-        resolve(initialContacts);
-      }, 200);
-    });
+  async (_, { rejectWithValue }) => {
+    try {
+      const apiUrl = 'http://localhost:3001';
+      if (!apiUrl) {
+        throw new Error('API URL is not defined');
+      }
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Token is not available');
+      }
+
+      const response = await fetch(`${apiUrl}/contacts`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data: Contact[] = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching contacts:', error);
+      return rejectWithValue('Failed to fetch contacts');
+    }
   }
 );
 
 export const fetchContactById = createAsyncThunk<Contact | null, string>(
   'contact/fetchContactById',
-  async (id: string) => {
-    return new Promise<Contact | null>((resolve) => {
-      setTimeout(() => {
-        const contact = initialContacts.find(contact => contact.id === id);
-        resolve(contact || null);
-      }, 200);
-    });
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const apiUrl = 'http://localhost:3001';
+      if (!apiUrl) {
+        throw new Error('API URL is not defined');
+      }
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Token is not available');
+      }
+
+      const response = await fetch(`${apiUrl}/contacts/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data: Contact = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error fetching contact by ID:', error);
+      return rejectWithValue('Failed to fetch contact by ID');
+    }
   }
 );
 
 export const createContact = createAsyncThunk<Contact, Contact>(
   'contact/createContact',
-  async (newContact: Contact) => {
-    return new Promise<Contact>((resolve) => {
-      setTimeout(() => {
-        resolve(newContact);
-      }, 200);
-    });
+  async (newContact: Contact, { rejectWithValue }) => {
+    try {
+      const apiUrl = 'http://localhost:3001';
+      if (!apiUrl) {
+        throw new Error('API URL is not defined');
+      }
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Token is not available');
+      }
+
+      const response = await fetch(`${apiUrl}/contacts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(newContact),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data: Contact = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error creating contact:', error);
+      return rejectWithValue('Failed to create contact');
+    }
   }
 );
 
 export const updateContact = createAsyncThunk<Contact, Contact>(
   'contact/updateContact',
-  async (updatedContact: Contact) => {
-    return new Promise<Contact>((resolve) => {
-      setTimeout(() => {
-        resolve(updatedContact);
-      }, 200);
-    });
+  async (updatedContact: Contact, { rejectWithValue }) => {
+    try {
+      const apiUrl = 'http://localhost:3001';
+      if (!apiUrl) {
+        throw new Error('API URL is not defined');
+      }
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Token is not available');
+      }
+
+      const response = await fetch(`${apiUrl}/contacts/${updatedContact.id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(updatedContact),
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      const data: Contact = await response.json();
+      return data;
+    } catch (error) {
+      console.error('Error updating contact:', error);
+      return rejectWithValue('Failed to update contact');
+    }
   }
 );
 
 export const deleteContact = createAsyncThunk<string, string>(
   'contact/deleteContact',
-  async (id: string) => {
-    return new Promise<string>((resolve) => {
-      setTimeout(() => {
-        resolve(id);
-      }, 200);
-    });
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const apiUrl = 'http://localhost:3001';
+      if (!apiUrl) {
+        throw new Error('API URL is not defined');
+      }
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        throw new Error('Token is not available');
+      }
+
+      const response = await fetch(`${apiUrl}/contacts/${id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+
+      return id;
+    } catch (error) {
+      console.error('Error deleting contact:', error);
+      return rejectWithValue('Failed to delete contact');
+    }
   }
 );

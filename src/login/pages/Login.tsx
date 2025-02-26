@@ -2,92 +2,94 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import {
-  PageContainer,
-  TitleBlock,
-  FormBlock,
-  Form,
-  Label,
-  Input,
-  Button,
-  MasterCredentialsBlock,
-  Title,
+    PageContainer,
+    TitleBlock,
+    FormBlock,
+    Form,
+    Label,
+    Input,
+    Button,
+    MasterCredentialsBlock,
+    Title,
 } from "../components/LoginStyles";
 import { Credentials } from '../interfaces/LoginInterfaces';
 
 const Login: React.FC = () => {
-  const [credentials, setCredentials] = useState<Credentials>({ email: "", password: "" });
-  const { login } = useAuth();
+    const [credentials, setCredentials] = useState<Credentials>({ email: "", password: "" });
+    const { login } = useAuth();
+    const navigate = useNavigate();
 
-  const MASTER_EMAIL = "alberto@gmail.com";
-  const MASTER_PASSWORD = "alberto1234";
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    };
 
-  const navigate = useNavigate();
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const { email, password } = credentials;
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCredentials({ ...credentials, [e.target.name]: e.target.value });
-  };
+        try {
+            const response = await fetch(`http://localhost:3001/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const { email, password } = credentials;
-    if (email === MASTER_EMAIL && password === MASTER_PASSWORD) {
-      login({ name: "Alberto", email: MASTER_EMAIL });
-      alert("Login exitoso");
-      navigate("/dashboard");
-    } else {
-      alert("Credenciales incorrectas");
-    }
-  };
+            if (!response.ok) {
+                const errorData = await response.json();
+                alert(`Error al iniciar sesión: ${errorData.message}`);
+                return;
+            }
 
-  return (
-    <PageContainer>
-      <TitleBlock>
-        <Title>Login</Title>
-      </TitleBlock>
+            const data = await response.json();
+            localStorage.setItem('token', data.token);
+            login({ email, name: data.name }); // Pasa email y name a la función login
+            alert("Login exitoso");
+            navigate("/dashboard");
+        } catch (error) {
+            console.error('Error al iniciar sesión:', error);
+            alert("Error al iniciar sesión. Inténtalo de nuevo.");
+        }
+    };
 
-      <FormBlock>
-        <Form onSubmit={handleSubmit}>
-          <Label>
-            Email:
-            <Input
-              type="email"
-              name="email"
-              value={credentials.email}
-              onChange={handleChange}
-              placeholder="Introduce tu email"
-              required
-              data-cy="emailInput"
-            />
-          </Label>
-          <Label>
-            Contraseña:
-            <Input
-              type="password"
-              name="password"
-              value={credentials.password}
-              onChange={handleChange}
-              placeholder="Introduce tu contraseña"
-              required
-              data-cy="passwordInput"
-            />
-          </Label>
-          <Button type="submit" data-cy="submitButton">Entrar</Button>
-        </Form>
-      </FormBlock>
+    return (
+        <PageContainer>
+            <TitleBlock>
+                <Title>Login</Title>
+            </TitleBlock>
 
-      <MasterCredentialsBlock>
-        <p>
-          <strong>Credenciales para acceder:</strong>
-        </p>
-        <p>
-          <strong>Email:</strong> {MASTER_EMAIL}
-        </p>
-        <p>
-          <strong>Contraseña:</strong> {MASTER_PASSWORD}
-        </p>
-      </MasterCredentialsBlock>
-    </PageContainer>
-  );
+            <FormBlock>
+                <Form onSubmit={handleSubmit}>
+                    <Label>
+                        Email:
+                        <Input
+                            type="email"
+                            name="email"
+                            value={credentials.email}
+                            onChange={handleChange}
+                            placeholder="Introduce tu email"
+                            required
+                            data-cy="emailInput"
+                        />
+                    </Label>
+                    <Label>
+                        Contraseña:
+                        <Input
+                            type="password"
+                            name="password"
+                            value={credentials.password}
+                            onChange={handleChange}
+                            placeholder="Introduce tu contraseña"
+                            required
+                            data-cy="passwordInput"
+                        />
+                    </Label>
+                    <Button type="submit" data-cy="submitButton">Entrar</Button>
+                </Form>
+            </FormBlock>
+        </PageContainer>
+    );
 };
 
 export default Login;
