@@ -44,7 +44,7 @@ const Login: React.FC = () => {
 
             const data = await response.json();
             localStorage.setItem('token', data.token);
-            login({ email, name: data.name }); // Pasa email y name a la función login
+            login({ email, name: data.name });
             alert("Login exitoso");
             navigate("/dashboard");
         } catch (error) {
@@ -88,6 +88,17 @@ const Login: React.FC = () => {
                     <Button type="submit" data-cy="submitButton">Entrar</Button>
                 </Form>
             </FormBlock>
+            <MasterCredentialsBlock>
+                <p>
+                    <strong>Credenciales para acceder:</strong>
+                </p>
+                <p>
+                    <strong>Email:</strong> alberto@gmail.com
+                </p>
+                <p>
+                    <strong>Contraseña:</strong> alberto1234
+                </p>
+            </MasterCredentialsBlock>
         </PageContainer>
     );
 };
