@@ -1,30 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useRef, FormEvent } from "react";
 import { useNavigate } from 'react-router-dom';
+import { FaUserCircle } from "react-icons/fa";
 import { useAuth } from '../../context/AuthContext';
 import {
-    PageContainer,
-    TitleBlock,
-    FormBlock,
-    Form,
-    Label,
+    LoginContent,
+    HeaderImage,
+    LoginContainer,
+    UserIcon,
+    LoginInfo,
     Input,
     Button,
-    MasterCredentialsBlock,
-    Title,
 } from "../components/LoginStyles";
+import hotel from "../../assets/login.jpg";
 import { Credentials } from '../interfaces/LoginInterfaces';
 
 const Login: React.FC = () => {
     const [credentials, setCredentials] = useState<Credentials>({ email: "", password: "" });
     const { login } = useAuth();
     const navigate = useNavigate();
+    const [isLogingIn, setIsLogingIn] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setCredentials({ ...credentials, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setIsLogingIn(true);
         const { email, password } = credentials;
 
         try {
@@ -39,7 +41,7 @@ const Login: React.FC = () => {
             if (!response.ok) {
                 const errorData = await response.json();
                 alert(`Error al iniciar sesión: ${errorData.message}`);
-                return;
+                return setIsLogingIn(false);
             }
 
             const data = await response.json();
@@ -51,55 +53,37 @@ const Login: React.FC = () => {
             console.error('Error al iniciar sesión:', error);
             alert("Error al iniciar sesión. Inténtalo de nuevo.");
         }
+
+        setIsLogingIn(false);
     };
 
     return (
-        <PageContainer>
-            <TitleBlock>
-                <Title>Login</Title>
-            </TitleBlock>
+        <>
+            <LoginContent>
+                <HeaderImage src={hotel} alt="imagen header del panel del hotel" />
 
-            <FormBlock>
-                <Form onSubmit={handleSubmit}>
-                    <Label>
-                        Email:
-                        <Input
-                            type="email"
-                            name="email"
-                            value={credentials.email}
-                            onChange={handleChange}
-                            placeholder="Introduce tu email"
-                            required
-                            data-cy="emailInput"
-                        />
-                    </Label>
-                    <Label>
-                        Contraseña:
-                        <Input
-                            type="password"
-                            name="password"
-                            value={credentials.password}
-                            onChange={handleChange}
-                            placeholder="Introduce tu contraseña"
-                            required
-                            data-cy="passwordInput"
-                        />
-                    </Label>
-                    <Button type="submit" data-cy="submitButton">Entrar</Button>
-                </Form>
-            </FormBlock>
-            <MasterCredentialsBlock>
-                <p>
-                    <strong>Credenciales para acceder:</strong>
-                </p>
-                <p>
-                    <strong>Email:</strong> alberto@gmail.com
-                </p>
-                <p>
-                    <strong>Contraseña:</strong> alberto1234
-                </p>
-            </MasterCredentialsBlock>
-        </PageContainer>
+                <LoginContainer>
+                    <UserIcon />
+
+                    <LoginInfo>
+                        <div className="login">
+                            (
+                            <small>alberto@gmail.com</small>|
+                            <small>alberto1234</small>
+                            )
+                        </div>
+                    </LoginInfo>
+
+                    <form onSubmit={handleSubmit} style={{ marginTop: '2rem' }}>
+                        <Input type="email" name="email" placeholder="Insert username" value={credentials.email} onChange={handleChange} />
+                        <Input type="password" name="password" placeholder="Insert password" value={credentials.password} onChange={handleChange} />
+                        <Button type="submit" disabled={isLogingIn}>
+                            {isLogingIn ? "Logging in..." : "Login"}
+                        </Button>
+                    </form>
+                </LoginContainer>
+            </LoginContent>
+        </>
     );
 };
 

@@ -1,77 +1,66 @@
 import styled from "styled-components";
+import { FaUserCircle } from "react-icons/fa";
 
-export const PageContainer = styled.div`
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  height: 100vh;
-  width: 100vw;
-  background-color: #f0f4f8;
-  padding: 2rem;
-  box-sizing: border-box;
+export const LoginContent = styled.div`
+    background-color: #C5C5C5;
+    text-align: center;
+    display: flex;
+    align-items: center;
 `;
 
-export const TitleBlock = styled.div`
-  text-align: center;
-  margin-top: 1rem;
+export const HeaderImage = styled.img`
+    height: 100vh;
+    width: 50%;
+    object-fit: cover;
+    object-position: bottom;
 `;
 
-export const Title = styled.h1`
-  font-size: 2.5rem;
-  color: #135846;
+export const LoginContainer = styled.div`
+    width: 50%;
 `;
 
-export const FormBlock = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-grow: 1;
-  width: 100%;
+export const UserIcon = styled(FaUserCircle)`
+    font-size: 50px;
+    margin-bottom: 1rem;
 `;
 
-export const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  max-width: 400px;
-  background-color: white;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  gap: 1.5rem;
-`;
+export const LoginInfo = styled.div`
+    padding: 0.5rem;
+    color: red;
+    border-radius: 1rem;
 
-export const Label = styled.label`
-  font-size: 1rem;
-  color: #333;
+    .login {
+        margin-top: 0.5rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+        color: #135846;
+        filter: brightness(50%);
+    }
 `;
 
 export const Input = styled.input`
-  padding: 0.75rem;
-  font-size: 1rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  width: 100%;
+    background-color: ${({ theme }) => theme.contentBg};
+    color: ${({ theme }) => theme.text};
+    width: 300px;
+    padding: 0.5rem;
+    border: 2px solid #188669;
+    border-radius: 0.5rem;
+    z-index: 1;
+    display: block;
+    margin: 1rem auto 2rem auto;
 `;
 
 export const Button = styled.button`
-  padding: 0.75rem;
-  font-size: 1rem;
-  color: white;
-  background-color: #135846;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+    background-color: #135846;
+    color: ${({ theme }) => theme.text};
+    box-shadow: 1px 1px 2px black;
+    width: 150px;
+    border: unset;
+    margin-bottom: 2rem;
 
-  &:hover {
-    background-color: #0d3c32;
-  }
-`;
-
-export const MasterCredentialsBlock = styled.div`
-  margin-bottom: 1rem;
-  text-align: center;
-  font-size: 0.9rem;
-  color: #666;
+    &:hover {
+        filter: brightness(90%);
+    }
 `;
