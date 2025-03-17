@@ -96,7 +96,7 @@ const Contact: React.FC<{ isSidebarVisible: boolean }> = ({ isSidebarVisible }) 
   return (
     <>
       <ToastContainer />
-      <div style={{ marginLeft: isSidebarVisible ? "250px" : "70px", transition: "margin-left 0.3s ease" }}>
+      <div style={{ marginLeft: isSidebarVisible ? "" : "70px", transition: "margin-left 0.3s ease" }}>
         <ContactCardsContainer>
           <CardsContainer>
             <CardContact onClick={handleCardClick} />

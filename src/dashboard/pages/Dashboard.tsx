@@ -41,7 +41,7 @@ const Dashboard: React.FC<DashboardProps> = ({ isSidebarVisible }) => {
 
   return (
     <div 
-      style={{ marginLeft: isSidebarVisible ? "250px" : "70px", transition: "margin-left 0.3s ease" }} 
+      style={{ marginLeft: isSidebarVisible ? "2%" : "70px", transition: "margin-left 0.3s ease" }} 
       data-cy="dashboard"
     >
       <ToastContainer />
