@@ -10,27 +10,85 @@ import {
     UsersMenuStyled,
     UsersMenuTextStyled,
     UsersMenuItemStyled,
-    UsersFirstRowStyled,
-    UsersFirstRowItemStyled,
-    UsersItemStyled,
-    UsersItemTextStyled,
-    UsersItemNameStyled,
-    UsersItemJobStyled,
-    UsersItemContactStyled,
-    UsersItemStatusStyled,
-    UsersProfilePhotoStyled,
     SearchBarContainer,
     SearchBarInputStyled,
     UsersButtonStyled,
     SortSelectStyled,
     PaginationContainer,
     PaginationButton,
-    DataInfoStyled
+    DataInfoStyled,
 } from "../components/UsersStyles";
-// Importa la imagen predeterminada desde tu carpeta 'public'
 import defaultProfilePhoto from '../../assets/perfil.jpg';
 import { User, UsersState } from '../interfaces/UserInterfaces';
 import { RootState, AppDispatch } from '../../store/store';
+import styled from 'styled-components';
+
+const UsersTable = styled.table`
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background: #ffffff;
+    border-radius: 0.5rem;
+    box-shadow: 0px 4px 8px rgba(0,0,0,0.05);
+`;
+
+const TableHead = styled.thead`
+    background: #ffffff;
+    border-bottom: 1px solid #D4D4D4;
+`;
+
+const TableHeader = styled.th`
+    font-family: 'Poppins';
+    font-size: 1rem;
+    font-weight: 700;
+    color: #393939;
+    text-align: center;
+    padding: 1rem 2%;
+`;
+
+const TableBody = styled.tbody``;
+
+const TableRow = styled.tr``;
+
+const TableCell = styled.td`
+    font-family: 'Poppins';
+    font-size: 1rem;
+    font-weight: 600;
+    color: #393939;
+    text-align: center;
+    padding: 1rem 0%;
+    border-bottom: 1px solid #D4D4D4;
+`;
+
+const ProfilePhotoCell = styled(TableCell)`
+      gap: 0.5rem;
+      justify-content: center;
+    align-items: center;
+
+    img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+`;
+
+const NameCell = styled(TableCell)`
+    text-align: center;
+`;
+
+const ContactCell = styled(TableCell)`
+      gap: 0.5rem;
+      align-items: center;
+`;
+
+interface StatusCellProps {
+    status: 'ACTIVE' | 'INACTIVE';
+}
+
+const StatusCell = styled(TableCell)<StatusCellProps>`
+    color: ${props => (props.status === "ACTIVE" ? "#5AD07A" : "#E23428")};
+`;
 
 const Users: React.FC = () => {
     const navigate = useNavigate();
@@ -169,37 +227,46 @@ const Users: React.FC = () => {
                         + New Employee
                     </UsersButtonStyled>
                 </UsersMenuStyled>
-                <UsersFirstRowStyled>
-                    <UsersFirstRowItemStyled>Photo</UsersFirstRowItemStyled>
-                    <UsersFirstRowItemStyled>Name</UsersFirstRowItemStyled>
-                    <UsersFirstRowItemStyled>Start Date</UsersFirstRowItemStyled>
-                    <UsersFirstRowItemStyled>Description</UsersFirstRowItemStyled>
-                    <UsersFirstRowItemStyled>Contact</UsersFirstRowItemStyled>
-                    <UsersFirstRowItemStyled>Status</UsersFirstRowItemStyled>
-                </UsersFirstRowStyled>
-                {status === 'loading' ? (
-                    <p>Loading users...</p>
-                ) : status === 'succeeded' ? (
-                    currentUsers.map((user: User) => (
-                        <UsersItemStyled key={user.id}>
-                            <UsersProfilePhotoStyled>
-                                {/* Usa la imagen predeterminada para todos los usuarios */}
-                                <img src={defaultProfilePhoto} alt="Profile" />
-                            </UsersProfilePhotoStyled>
-                            <UsersItemNameStyled>
-                                {user.name}<br />
-                                ID: {user.id}<br />
-                                Email: {user.email}
-                            </UsersItemNameStyled>
-                            <UsersItemTextStyled>{user.joinDate}</UsersItemTextStyled>
-                            <UsersItemJobStyled>{user.jobDesk}</UsersItemJobStyled>
-                            <UsersItemContactStyled><MdOutlineLocalPhone style={{ marginRight: "0.5rem", fontSize: "1.5rem" }} /> {user.contact}</UsersItemContactStyled>
-                            <UsersItemStatusStyled status={user.status}>{user.status}</UsersItemStatusStyled>
-                        </UsersItemStyled>
-                    ))
-                ) : status === 'failed' ? (
-                    <p>{error}</p>
-                ) : null}
+
+                <UsersTable>
+                    <TableHead>
+                        <TableRow>
+                            <TableHeader>Photo</TableHeader>
+                            <TableHeader>Name</TableHeader>
+                            <TableHeader>Start Date</TableHeader>
+                            <TableHeader>Description</TableHeader>
+                            <TableHeader>Contact</TableHeader>
+                            <TableHeader>Status</TableHeader>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {status === 'loading' ? (
+                            <TableRow><TableCell colSpan={6}>Loading users...</TableCell></TableRow>
+                        ) : status === 'succeeded' ? (
+                            currentUsers.map((user: User) => (
+                                <TableRow key={user.id}>
+                                    <ProfilePhotoCell>
+                                        <img src={defaultProfilePhoto} alt="Profile" />
+                                    </ProfilePhotoCell>
+                                    <NameCell style={{ textAlign: 'center' }}>
+                                        {user.name}<br />
+                                        <span style={{ fontSize: '0.9rem', color: '#555', fontWeight: 'normal' }}>ID: {user.id}</span><br />
+                                        <span style={{ fontSize: '0.9rem', color: '#555', fontWeight: 'normal' }}>Email: {user.email}</span>
+                                    </NameCell>
+                                    <TableCell>{user.joinDate}</TableCell>
+                                    <TableCell>{user.jobDesk}</TableCell>
+                                    <ContactCell>
+                                        <MdOutlineLocalPhone style={{ marginRight: "0.5rem", fontSize: "1rem" }} /> {user.contact}
+                                    </ContactCell>
+                                    <StatusCell status={user.status}>{user.status}</StatusCell>
+                                </TableRow>
+                            ))
+                        ) : status === 'failed' ? (
+                            <TableRow><TableCell colSpan={6}>{error}</TableCell></TableRow>
+                        ) : null}
+                    </TableBody>
+                </UsersTable>
+
                 <PaginationContainer>
                     <DataInfoStyled>
                         Showing {showingEnd} of {totalEntries} Data

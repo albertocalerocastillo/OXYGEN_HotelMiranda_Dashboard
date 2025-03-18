@@ -7,7 +7,6 @@ interface UsersMenuItemStyledProps {
 export const UsersStyled = styled.div`
   display: flex;
   flex-direction: column;
-  margin-top: 8rem;
   padding: 1rem 2%;
   background: #f9f9f9;
   border-radius: .5rem;
