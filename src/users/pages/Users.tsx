@@ -6,209 +6,214 @@ import 'react-toastify/dist/ReactToastify.css';
 import { fetchUsers } from '../features/UsersThunks';
 import { MdOutlineLocalPhone } from "react-icons/md";
 import {
-  UsersStyled,
-  UsersMenuStyled,
-  UsersMenuTextStyled,
-  UsersMenuItemStyled,
-  UsersFirstRowStyled,
-  UsersFirstRowItemStyled,
-  UsersItemStyled,
-  UsersItemTextStyled,
-  UsersItemNameStyled,
-  UsersItemJobStyled,
-  UsersItemContactStyled,
-  UsersItemStatusStyled,
-  UsersProfilePhotoStyled,
-  SearchBarContainer,
-  SearchBarInputStyled,
-  UsersButtonStyled,
-  SortSelectStyled,
-  PaginationContainer,
-  PaginationButton,
-  DataInfoStyled
+    UsersStyled,
+    UsersMenuStyled,
+    UsersMenuTextStyled,
+    UsersMenuItemStyled,
+    UsersFirstRowStyled,
+    UsersFirstRowItemStyled,
+    UsersItemStyled,
+    UsersItemTextStyled,
+    UsersItemNameStyled,
+    UsersItemJobStyled,
+    UsersItemContactStyled,
+    UsersItemStatusStyled,
+    UsersProfilePhotoStyled,
+    SearchBarContainer,
+    SearchBarInputStyled,
+    UsersButtonStyled,
+    SortSelectStyled,
+    PaginationContainer,
+    PaginationButton,
+    DataInfoStyled
 } from "../components/UsersStyles";
-import profilePhoto from '../../assets/perfil.jpg';
+// Importa la imagen predeterminada desde tu carpeta 'public'
+import defaultProfilePhoto from '../../assets/perfil.jpg';
 import { User, UsersState } from '../interfaces/UserInterfaces';
 import { RootState, AppDispatch } from '../../store/store';
 
 const Users: React.FC = () => {
-  const navigate = useNavigate();
-  const dispatch: AppDispatch = useDispatch();
-  const { users, status, error } = useSelector((state: RootState) => state.users);
+    const navigate = useNavigate();
+    const dispatch: AppDispatch = useDispatch();
+    const { users, status, error } = useSelector((state: RootState) => state.users);
 
-  const [activeTab, setActiveTab] = useState<string>("all");
-  const [searchTerm, setSearchTerm] = useState<string>("");
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [sortOption, setSortOption] = useState<string>("date");
+    const [activeTab, setActiveTab] = useState<string>("all");
+    const [searchTerm, setSearchTerm] = useState<string>("");
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [sortOption, setSortOption] = useState<string>("date");
 
-  const usersPerPage = 10;
+    const usersPerPage = 10;
 
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
+    useEffect(() => {
+        dispatch(fetchUsers());
+    }, [dispatch]);
 
-  useEffect(() => {
-    if (status === 'loading') {
-      toast.info("Loading users...", {
-        autoClose: 1000,
-        toastId: 'loading'
-      });
-    } else if (status === 'succeeded') {
-      toast.dismiss('loading');
-      toast.success("Users loaded successfully!", {
-        autoClose: 3000,
-        toastId: 'success'
-      });
-    } else if (status === 'failed') {
-      toast.dismiss('loading');
-      toast.error(`Failed to load users: ${error}`, {
-        autoClose: 3000,
-        toastId: 'error'
-      });
-    }
-  }, [status, error]);
+    useEffect(() => {
+        if (status === 'loading') {
+            toast.info("Loading users...", {
+                autoClose: 1000,
+                toastId: 'loading'
+            });
+        } else if (status === 'succeeded') {
+            toast.dismiss('loading');
+            toast.success("Users loaded successfully!", {
+                autoClose: 3000,
+                toastId: 'success'
+            });
+        } else if (status === 'failed') {
+            toast.dismiss('loading');
+            toast.error(`Failed to load users: ${error}`, {
+                autoClose: 3000,
+                toastId: 'error'
+            });
+        }
+    }, [status, error]);
 
-  const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-    setCurrentPage(1);
-  };
-
-  const handleSortOption = (event: ChangeEvent<HTMLSelectElement>) => {
-    setSortOption(event.target.value);
-  };
-
-  const handleTabChange = (tab: string) => {
-    setActiveTab(tab);
-    setCurrentPage(1);
-  };
-
-  const parseDate = (dateString: string): Date => {
-    const months: { [key: string]: number } = {
-      Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
-      Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11
+    const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(event.target.value);
+        setCurrentPage(1);
     };
-    const [month, day, year] = dateString.split(" ");
-    return new Date(parseInt(year), months[month], parseInt(day));
-  };
 
-  const filteredUsers = users
-    .filter(user => 
-      user.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (activeTab === "all" || user.status === (activeTab === "active" ? "ACTIVE" : "INACTIVE"))
-    )
-    .sort((a, b) => {
-      if (sortOption === "name") {
-        return a.name.localeCompare(b.name);
-      }
-      return parseDate(a.joinDate).getTime() - parseDate(b.joinDate).getTime();
-    });
+    const handleSortOption = (event: ChangeEvent<HTMLSelectElement>) => {
+        setSortOption(event.target.value);
+    };
 
-  const indexOfLastUser = currentPage * usersPerPage;
-  const indexOfFirstUser = indexOfLastUser - usersPerPage;
-  const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
+    const handleTabChange = (tab: string) => {
+        setActiveTab(tab);
+        setCurrentPage(1);
+    };
 
-  const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
+    const parseDate = (dateString: string): Date => {
+        const months: { [key: string]: number } = {
+            Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5,
+            Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11
+        };
+        const [month, day, year] = dateString.split(" ");
+        return new Date(parseInt(year), months[month], parseInt(day));
+    };
 
-  const nextPage = () => {
-    if (currentPage < totalPages) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+    const filteredUsers = (users || [])
+        .filter(user => {
+            if (!user || !user.name) {
+                return false;
+            }
+            return user.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                (activeTab === "all" || user.status === (activeTab === "active" ? "ACTIVE" : "INACTIVE"));
+        })
+        .sort((a, b) => {
+            if (sortOption === "name") {
+                return a.name.localeCompare(b.name);
+            }
+            return parseDate(a.joinDate).getTime() - parseDate(b.joinDate).getTime();
+        });
 
-  const prevPage = () => {
-    if (currentPage > 1) {
-      setCurrentPage(currentPage - 1);
-    }
-  };
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = filteredUsers.slice(indexOfFirstUser, indexOfLastUser);
 
-  const showingEnd = Math.min(indexOfLastUser, filteredUsers.length);
-  const totalEntries = filteredUsers.length;
+    const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
 
-  return (
-    <>
-      <ToastContainer />
-      <UsersStyled>
-        <UsersMenuStyled>
-          <UsersMenuTextStyled>
-            <UsersMenuItemStyled
-              active={activeTab === "all"}
-              onClick={() => handleTabChange("all")}
-            >
-              All Employee
-            </UsersMenuItemStyled>
-            <UsersMenuItemStyled
-              active={activeTab === "active"}
-              onClick={() => handleTabChange("active")}
-            >
-              Active Employee
-            </UsersMenuItemStyled>
-            <UsersMenuItemStyled
-              active={activeTab === "inactive"}
-              onClick={() => handleTabChange("inactive")}
-            >
-              Inactive Employee
-            </UsersMenuItemStyled>
-          </UsersMenuTextStyled>
-          <SearchBarContainer>
-            <SearchBarInputStyled
-              type="text"
-              placeholder="Buscar empleado..."
-              value={searchTerm}
-              onChange={handleSearch}
-            />
-          </SearchBarContainer>
-          <SortSelectStyled value={sortOption} onChange={handleSortOption}>
-            <option value="date">Filtrar por Start Date</option>
-            <option value="name">Filtrar por Name</option>
-          </SortSelectStyled>
-          <UsersButtonStyled onClick={() => navigate("/new-employee")}>
-            + New Employee
-          </UsersButtonStyled>
-        </UsersMenuStyled>
-        <UsersFirstRowStyled>
-          <UsersFirstRowItemStyled>Photo</UsersFirstRowItemStyled>
-          <UsersFirstRowItemStyled>Name</UsersFirstRowItemStyled>
-          <UsersFirstRowItemStyled>Start Date</UsersFirstRowItemStyled>
-          <UsersFirstRowItemStyled>Description</UsersFirstRowItemStyled>
-          <UsersFirstRowItemStyled>Contact</UsersFirstRowItemStyled>
-          <UsersFirstRowItemStyled>Status</UsersFirstRowItemStyled>
-        </UsersFirstRowStyled>
-        {status === 'loading' ? (
-          <p>Loading users...</p>
-        ) : status === 'succeeded' ? (
-          currentUsers.map((user: User) => (
-            <UsersItemStyled key={user.id}>
-              <UsersProfilePhotoStyled>
-                <img src={user.profilePhoto === "perfil.jpg" ? profilePhoto : user.profilePhoto} alt="Profile" />
-              </UsersProfilePhotoStyled>
-              <UsersItemNameStyled>
-                {user.name}<br />
-                ID: {user.id}<br />
-                Email: {user.email}
-              </UsersItemNameStyled>
-              <UsersItemTextStyled>{user.joinDate}</UsersItemTextStyled>
-              <UsersItemJobStyled>{user.jobDesk}</UsersItemJobStyled>
-              <UsersItemContactStyled><MdOutlineLocalPhone style={{ marginRight: "0.5rem", fontSize: "1.5rem" }} /> {user.contact}</UsersItemContactStyled>
-              <UsersItemStatusStyled status={user.status}>{user.status}</UsersItemStatusStyled>
-            </UsersItemStyled>
-          ))
-        ) : status === 'failed' ? (
-          <p>{error}</p>
-        ) : null}
-        <PaginationContainer>
-          <DataInfoStyled>
-            Showing {showingEnd} of {totalEntries} Data
-          </DataInfoStyled>
-          <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
-            Prev
-          </PaginationButton>
-          <PaginationButton onClick={nextPage} disabled={currentPage === totalPages}>
-            Next
-          </PaginationButton>
-        </PaginationContainer>
-      </UsersStyled>
-    </>
-  );
+    const nextPage = () => {
+        if (currentPage < totalPages) {
+            setCurrentPage(currentPage + 1);
+        }
+    };
+
+    const prevPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(currentPage - 1);
+        }
+    };
+
+    const showingEnd = Math.min(indexOfLastUser, filteredUsers.length);
+    const totalEntries = filteredUsers.length;
+
+    return (
+        <>
+            <ToastContainer />
+            <UsersStyled>
+                <UsersMenuStyled>
+                    <UsersMenuTextStyled>
+                        <UsersMenuItemStyled
+                            active={activeTab === "all"}
+                            onClick={() => handleTabChange("all")}
+                        >
+                            All Employee
+                        </UsersMenuItemStyled>
+                        <UsersMenuItemStyled
+                            active={activeTab === "active"}
+                            onClick={() => handleTabChange("active")}
+                        >
+                            Active Employee
+                        </UsersMenuItemStyled>
+                        <UsersMenuItemStyled
+                            active={activeTab === "inactive"}
+                            onClick={() => handleTabChange("inactive")}
+                        >
+                            Inactive Employee
+                        </UsersMenuItemStyled>
+                    </UsersMenuTextStyled>
+                    <SearchBarContainer>
+                        <SearchBarInputStyled
+                            type="text"
+                            placeholder="Buscar empleado..."
+                            value={searchTerm}
+                            onChange={handleSearch}
+                        />
+                    </SearchBarContainer>
+                    <SortSelectStyled value={sortOption} onChange={handleSortOption}>
+                        <option value="date">Filtrar por Start Date</option>
+                        <option value="name">Filtrar por Name</option>
+                    </SortSelectStyled>
+                    <UsersButtonStyled onClick={() => navigate("/new-employee")}>
+                        + New Employee
+                    </UsersButtonStyled>
+                </UsersMenuStyled>
+                <UsersFirstRowStyled>
+                    <UsersFirstRowItemStyled>Photo</UsersFirstRowItemStyled>
+                    <UsersFirstRowItemStyled>Name</UsersFirstRowItemStyled>
+                    <UsersFirstRowItemStyled>Start Date</UsersFirstRowItemStyled>
+                    <UsersFirstRowItemStyled>Description</UsersFirstRowItemStyled>
+                    <UsersFirstRowItemStyled>Contact</UsersFirstRowItemStyled>
+                    <UsersFirstRowItemStyled>Status</UsersFirstRowItemStyled>
+                </UsersFirstRowStyled>
+                {status === 'loading' ? (
+                    <p>Loading users...</p>
+                ) : status === 'succeeded' ? (
+                    currentUsers.map((user: User) => (
+                        <UsersItemStyled key={user.id}>
+                            <UsersProfilePhotoStyled>
+                                {/* Usa la imagen predeterminada para todos los usuarios */}
+                                <img src={defaultProfilePhoto} alt="Profile" />
+                            </UsersProfilePhotoStyled>
+                            <UsersItemNameStyled>
+                                {user.name}<br />
+                                ID: {user.id}<br />
+                                Email: {user.email}
+                            </UsersItemNameStyled>
+                            <UsersItemTextStyled>{user.joinDate}</UsersItemTextStyled>
+                            <UsersItemJobStyled>{user.jobDesk}</UsersItemJobStyled>
+                            <UsersItemContactStyled><MdOutlineLocalPhone style={{ marginRight: "0.5rem", fontSize: "1.5rem" }} /> {user.contact}</UsersItemContactStyled>
+                            <UsersItemStatusStyled status={user.status}>{user.status}</UsersItemStatusStyled>
+                        </UsersItemStyled>
+                    ))
+                ) : status === 'failed' ? (
+                    <p>{error}</p>
+                ) : null}
+                <PaginationContainer>
+                    <DataInfoStyled>
+                        Showing {showingEnd} of {totalEntries} Data
+                    </DataInfoStyled>
+                    <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
+                        Prev
+                    </PaginationButton>
+                    <PaginationButton onClick={nextPage} disabled={currentPage === totalPages}>
+                        Next
+                    </PaginationButton>
+                </PaginationContainer>
+            </UsersStyled>
+        </>
+    );
 };
 
 export default Users;

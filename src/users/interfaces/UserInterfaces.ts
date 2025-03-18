@@ -1,14 +1,13 @@
 export interface User {
-  id: number;
+  id: string;
   name: string;
   email: string;
   profilePhoto: string;
   joinDate: string;
-  job: string;
   jobDesk: string;
   contact: string;
   status: 'ACTIVE' | 'INACTIVE';
-  password: string;
+  password?: string;
 }
 
 export interface UsersState {
