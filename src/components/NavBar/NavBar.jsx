@@ -29,11 +29,14 @@ const NavBar = ({ toggleSidebar, isSidebarVisible }) => {
         return "Users";
       case "/new-employee":
         return "Users > Nuevo user";
-        default:
-          if (location.pathname.startsWith("/bookings/details")) {
-            return "Bookings > Details";
-          }
-          return "Dashboard"
+      default:
+        if (location.pathname.startsWith("/edit-employee/")) { // Cambiado aquí
+          return "Users > Edit user";
+        }
+        if (location.pathname.startsWith("/bookings/")) { // Cambiado aquí, para evitar conflicto
+          return "Bookings > Details";
+        }
+        return "Dashboard";
     }
   };
 

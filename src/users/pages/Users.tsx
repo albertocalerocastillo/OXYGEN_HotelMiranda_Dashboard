@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom'; // Importa Link
 import { useSelector, useDispatch } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -76,7 +76,6 @@ const ProfilePhotoCell = styled(TableCell)`
 const NameCell = styled(TableCell)`
     text-align: center;
     max-width: 170px;
-
 `;
 
 const DescriptionCell = styled(TableCell)`
@@ -209,21 +208,21 @@ const Users: React.FC = () => {
     const totalEntries = filteredUsers.length;
 
     const handleDelete = (id: string) => {
-      dispatch(deleteUser(id))
-          .unwrap()
-          .then(() => {
-              toast.success("User deleted successfully!", {
-                  autoClose: 3000,
-                  toastId: 'delete-success'
-              });
-          })
-          .catch((error) => {
-              toast.error(`Failed to delete user: ${error}`, {
-                  autoClose: 3000,
-                  toastId: 'delete-error'
-              });
-          });
-  };
+        dispatch(deleteUser(id))
+            .unwrap()
+            .then(() => {
+                toast.success("User deleted successfully!", {
+                    autoClose: 3000,
+                    toastId: 'delete-success'
+                });
+            })
+            .catch((error) => {
+                toast.error(`Failed to delete user: ${error}`, {
+                    autoClose: 3000,
+                    toastId: 'delete-error'
+                });
+            });
+    };
 
     return (
         <>
@@ -249,85 +248,88 @@ const Users: React.FC = () => {
                         >
                             Inactive Employee
                         </UsersMenuItemStyled>
-                    </UsersMenuTextStyled>
-                    <SearchBarContainer>
-                        <SearchBarInputStyled
-                            type="text"
-                            placeholder="Buscar empleado..."
-                            value={searchTerm}
-                            onChange={handleSearch}
-                        />
-                    </SearchBarContainer>
-                    <SortSelectStyled value={sortOption} onChange={handleSortOption}>
-                        <option value="date">Filtrar por Start Date</option>
-                        <option value="name">Filtrar por Name</option>
-                    </SortSelectStyled>
-                    <UsersButtonStyled onClick={() => navigate("/new-employee")}>
-                        + New Employee
-                    </UsersButtonStyled>
-                </UsersMenuStyled>
+                        </UsersMenuTextStyled>
+                        <SearchBarContainer>
+                            <SearchBarInputStyled
+                                type="text"
+                                placeholder="Buscar empleado..."
+                                value={searchTerm}
+                                onChange={handleSearch}
+                            />
+                        </SearchBarContainer>
+                        <SortSelectStyled value={sortOption} onChange={handleSortOption}>
+                            <option value="date">Filtrar por Start Date</option>
+                            <option value="name">Filtrar por Name</option>
+                        </SortSelectStyled>
+                        <UsersButtonStyled onClick={() => navigate("/new-employee")}>
+                            + New Employee
+                        </UsersButtonStyled>
+                    </UsersMenuStyled>
 
-                <UsersTable>
-                    <TableHead>
-                        <TableRow>
-                            <TableHeader>Photo</TableHeader>
-                            <TableHeader>Name</TableHeader>
-                            <TableHeader>Start Date</TableHeader>
-                            <TableHeader>Description</TableHeader>
-                            <TableHeader>Contact</TableHeader>
-                            <TableHeader>Status</TableHeader>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {status === 'loading' ? (
-                            <TableRow><TableCell colSpan={6}>Loading users...</TableCell></TableRow>
-                        ) : status === 'succeeded' ? (
-                            currentUsers.map((user: User) => (
-                                <TableRow key={user.id}>
-                                    <ProfilePhotoCell>
-                                        <img src={defaultProfilePhoto} alt="Profile" />
-                                    </ProfilePhotoCell>
-                                    <NameCell style={{ textAlign: 'center' }}>
-                                        {user.name}<br />
-                                        <span style={{ fontSize: '0.9rem', color: '#555', fontWeight: 'normal' }}>ID: {user.id}</span><br />
-                                        <span style={{ fontSize: '0.9rem', color: '#555', fontWeight: 'normal' }}>Email: {user.email}</span>
-                                    </NameCell>
-                                    <TableCell>{user.joinDate}</TableCell>
-                                    <DescriptionCell>{user.jobDesk}</DescriptionCell>
-                                    <ContactCell>
-                                        <MdOutlineLocalPhone style={{ marginRight: "0.5rem", fontSize: "1rem" }} /> {user.contact}
-                                    </ContactCell>
-                                    <StatusCell status={user.status}>{user.status}</StatusCell>
-                                    <ActionCell>
-                                        <ActionButton>
-                                            <MdEdit />
-                                        </ActionButton>
-                                        <ActionButton onClick={() => handleDelete(user.id)}>
-                                          <MdDelete />
-                                        </ActionButton>
-                                    </ActionCell>
-                                </TableRow>
-                            ))
-                        ) : status === 'failed' ? (
-                            <TableRow><TableCell colSpan={6}>{error}</TableCell></TableRow>
-                        ) : null}
-                    </TableBody>
-                </UsersTable>
+                    <UsersTable>
+                        <TableHead>
+                            <TableRow>
+                                <TableHeader>Photo</TableHeader>
+                                <TableHeader>Name</TableHeader>
+                                <TableHeader>Start Date</TableHeader>
+                                <TableHeader>Description</TableHeader>
+                                <TableHeader>Contact</TableHeader>
+                                <TableHeader>Status</TableHeader>
+                                <TableHeader>Actions</TableHeader> 
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {status === 'loading' ? (
+                                <TableRow><TableCell colSpan={7}>Loading users...</TableCell></TableRow>
+                            ) : status === 'succeeded' ? (
+                                currentUsers.map((user: User) => (
+                                    <TableRow key={user.id}>
+                                        <ProfilePhotoCell>
+                                            <img src={defaultProfilePhoto} alt="Profile" />
+                                        </ProfilePhotoCell>
+                                        <NameCell style={{ textAlign: 'center' }}>
+                                            {user.name}<br />
+                                            <span style={{ fontSize: '0.9rem', color: '#555', fontWeight: 'normal' }}>ID: {user.id}</span><br />
+                                            <span style={{ fontSize: '0.9rem', color: '#555', fontWeight: 'normal' }}>Email: {user.email}</span>
+                                        </NameCell>
+                                        <TableCell>{user.joinDate}</TableCell>
+                                        <DescriptionCell>{user.jobDesk}</DescriptionCell>
+                                        <ContactCell>
+                                            <MdOutlineLocalPhone style={{ marginRight: "0.5rem", fontSize: "1rem" }} /> {user.contact}
+                                        </ContactCell>
+                                        <StatusCell status={user.status}>{user.status}</StatusCell>
+                                        <ActionCell>
+                                            <ActionButton>
+                                                <Link to={`/edit-employee/${user.id}`}>
+                                                    <MdEdit />
+                                                </Link>
+                                            </ActionButton>
+                                            <ActionButton onClick={() => handleDelete(user.id)}>
+                                                <MdDelete />
+                                            </ActionButton>
+                                        </ActionCell>
+                                    </TableRow>
+                                ))
+                            ) : status === 'failed' ? (
+                                <TableRow><TableCell colSpan={7}>{error}</TableCell></TableRow>
+                            ) : null}
+                        </TableBody>
+                    </UsersTable>
 
-                <PaginationContainer>
-                    <DataInfoStyled>
-                        Showing {showingEnd} of {totalEntries} Data
-                    </DataInfoStyled>
-                    <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
-                        Prev
-                    </PaginationButton>
-                    <PaginationButton onClick={nextPage} disabled={currentPage === totalPages}>
-                        Next
-                    </PaginationButton>
-                </PaginationContainer>
-            </UsersStyled>
-        </>
-    );
-};
+                    <PaginationContainer>
+                        <DataInfoStyled>
+                            Showing {showingEnd} of {totalEntries} Data
+                        </DataInfoStyled>
+                        <PaginationButton onClick={prevPage} disabled={currentPage === 1}>
+                            Prev
+                        </PaginationButton>
+                        <PaginationButton onClick={nextPage} disabled={currentPage === totalPages}>
+                            Next
+                        </PaginationButton>
+                    </PaginationContainer>
+                </UsersStyled>
+            </>
+        );
+    };
 
-export default Users;
+    export default Users;

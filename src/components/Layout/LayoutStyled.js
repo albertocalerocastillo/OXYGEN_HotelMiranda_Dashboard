@@ -8,7 +8,7 @@ export const LayoutContainer = styled.div`
 export const MainContent = styled.div`
     flex-grow: 1;
     margin-left: ${(props) => (props.sidebarVisible ? "20%" : "0")};
-    transition: margin-left 0.3s ease; /* Agregada transición */
+    transition: margin-left 0.3s ease;
 `;
 
 export const Content = styled.div`

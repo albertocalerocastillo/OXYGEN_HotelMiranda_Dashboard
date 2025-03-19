@@ -14,6 +14,7 @@ import Users from "./users/pages/Users";
 import NewEmployeeForm from "./users/pages/NewEmployeeForm";
 import BookingsDetails from "./bookings/pages/BookingsDetails";
 import { AuthProvider } from "./context/AuthContext";
+import EditEmployeeForm from './users/pages/EditEmployeeForm';
 
 const App: React.FC = () => {
   const [isSidebarVisible, setIsSidebarVisible] = useState(false);
@@ -45,6 +46,7 @@ const App: React.FC = () => {
               <Route path='/contact' element={<PrivateRoute element={<Contact isSidebarVisible={isSidebarVisible} />} />} />
               <Route path='/users' element={<PrivateRoute element={<Users />} />} />
               <Route path='/new-employee' element={<PrivateRoute element={<NewEmployeeForm />} />} />
+              <Route path='/edit-employee/:id' element={<PrivateRoute element={<EditEmployeeForm />} />} />
             </Route>
           </Routes>
         </BrowserRouter>
