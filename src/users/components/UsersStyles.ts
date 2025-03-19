@@ -10,7 +10,6 @@ export const UsersStyled = styled.div`
   padding: 1rem 2%;
   background: #f9f9f9;
   border-radius: .5rem;
-  box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
 `;
 
 export const UsersMenuStyled = styled.div`

@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { fetchUsers } from '../features/UsersThunks';
-import { MdOutlineLocalPhone } from "react-icons/md";
+import { fetchUsers, deleteUser } from '../features/UsersThunks';
+import { MdOutlineLocalPhone, MdEdit, MdDelete } from "react-icons/md";
 import {
     UsersStyled,
     UsersMenuStyled,
@@ -61,8 +61,8 @@ const TableCell = styled.td`
 `;
 
 const ProfilePhotoCell = styled(TableCell)`
-      gap: 0.5rem;
-      justify-content: center;
+    gap: 0.5rem;
+    justify-content: center;
     align-items: center;
 
     img {
@@ -75,11 +75,19 @@ const ProfilePhotoCell = styled(TableCell)`
 
 const NameCell = styled(TableCell)`
     text-align: center;
+    max-width: 170px;
+
+`;
+
+const DescriptionCell = styled(TableCell)`
+    text-align: center;
+    max-width: 100px;
 `;
 
 const ContactCell = styled(TableCell)`
-      gap: 0.5rem;
-      align-items: center;
+    gap: 0.5rem;
+    align-items: center;
+    max-width: 100px;
 `;
 
 interface StatusCellProps {
@@ -88,6 +96,20 @@ interface StatusCellProps {
 
 const StatusCell = styled(TableCell)<StatusCellProps>`
     color: ${props => (props.status === "ACTIVE" ? "#5AD07A" : "#E23428")};
+`;
+
+const ActionCell = styled(TableCell)`
+    max-width: 70px;
+    justify-content: center;
+    gap: 0.5rem;
+`;
+
+const ActionButton = styled.button`
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #393939;
 `;
 
 const Users: React.FC = () => {
@@ -186,6 +208,23 @@ const Users: React.FC = () => {
     const showingEnd = Math.min(indexOfLastUser, filteredUsers.length);
     const totalEntries = filteredUsers.length;
 
+    const handleDelete = (id: string) => {
+      dispatch(deleteUser(id))
+          .unwrap()
+          .then(() => {
+              toast.success("User deleted successfully!", {
+                  autoClose: 3000,
+                  toastId: 'delete-success'
+              });
+          })
+          .catch((error) => {
+              toast.error(`Failed to delete user: ${error}`, {
+                  autoClose: 3000,
+                  toastId: 'delete-error'
+              });
+          });
+  };
+
     return (
         <>
             <ToastContainer />
@@ -254,11 +293,19 @@ const Users: React.FC = () => {
                                         <span style={{ fontSize: '0.9rem', color: '#555', fontWeight: 'normal' }}>Email: {user.email}</span>
                                     </NameCell>
                                     <TableCell>{user.joinDate}</TableCell>
-                                    <TableCell>{user.jobDesk}</TableCell>
+                                    <DescriptionCell>{user.jobDesk}</DescriptionCell>
                                     <ContactCell>
                                         <MdOutlineLocalPhone style={{ marginRight: "0.5rem", fontSize: "1rem" }} /> {user.contact}
                                     </ContactCell>
                                     <StatusCell status={user.status}>{user.status}</StatusCell>
+                                    <ActionCell>
+                                        <ActionButton>
+                                            <MdEdit />
+                                        </ActionButton>
+                                        <ActionButton onClick={() => handleDelete(user.id)}>
+                                          <MdDelete />
+                                        </ActionButton>
+                                    </ActionCell>
                                 </TableRow>
                             ))
                         ) : status === 'failed' ? (
