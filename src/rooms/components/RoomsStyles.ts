@@ -18,7 +18,6 @@ export const RoomsMenuStyled = styled.div`
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 3rem;
   padding: .5% 2%;
 `;
 
