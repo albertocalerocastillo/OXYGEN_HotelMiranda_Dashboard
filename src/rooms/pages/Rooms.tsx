@@ -15,7 +15,7 @@ import {
     PaginationButton,
     DataInfoStyled,
 } from "../components/RoomsStyles";
-import RoomPhoto from '../../assets/perfil.jpg';
+import RoomPhoto from '../../assets/room.jpg';
 import { Room } from '../interfaces/RoomInterfaces';
 import styled from 'styled-components';
 
@@ -65,6 +65,7 @@ const TableCell = styled.td`
 `;
 
 const PhotoCell = styled(TableCell)`
+    width: 150px;
     gap: 0.5rem;
     justify-content: center;
     align-items: center;
@@ -100,23 +101,14 @@ const ActionButton = styled.button`
 
 const RoomNameCell = styled(TableCell)`
     max-width: 200px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 `;
 
 const RoomTypeCell = styled(TableCell)`
     max-width: 150px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 `;
 
 const AmenitiesCell = styled(TableCell)`
     max-width: 250px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
 `;
 
 const Rooms: React.FC = () => {

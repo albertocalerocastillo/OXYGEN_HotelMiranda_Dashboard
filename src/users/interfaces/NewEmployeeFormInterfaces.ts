@@ -6,5 +6,4 @@ export interface FormData {
     jobDesk: string;
     status: 'ACTIVE' | 'INACTIVE';
     password: string;
-    // profilePhoto?: string; // Ya no es necesario aquí para el envío
 }
