@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 export const ContactCardsContainer = styled.div`
-  margin-top: 8rem;
   position: relative;
   width: 98%;
   transition: margin-left 0.3s ease;

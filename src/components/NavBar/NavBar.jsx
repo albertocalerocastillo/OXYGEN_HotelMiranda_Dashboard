@@ -30,10 +30,10 @@ const NavBar = ({ toggleSidebar, isSidebarVisible }) => {
       case "/new-employee":
         return "Users > Nuevo user";
       default:
-        if (location.pathname.startsWith("/edit-employee/")) { // Cambiado aquí
+        if (location.pathname.startsWith("/edit-employee/")) {
           return "Users > Edit user";
         }
-        if (location.pathname.startsWith("/bookings/")) { // Cambiado aquí, para evitar conflicto
+        if (location.pathname.startsWith("/bookings/")) {
           return "Bookings > Details";
         }
         return "Dashboard";
