@@ -39,7 +39,7 @@ const NavBar = ({ toggleSidebar, isSidebarVisible }) => {
         return "Dashboard";
     }
   };
-
+ 
   return (
     <Nav>
       <NavItemContainer>
