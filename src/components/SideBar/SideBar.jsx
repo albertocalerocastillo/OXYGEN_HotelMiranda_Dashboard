@@ -12,7 +12,7 @@ import {
   LuLayoutDashboard as DashboardIcon, LuCalendarCheck as BookingIcon,
   LuKeyRound as RoomsIcon, LuContact as ContactIcon, LuUsers as UsersIcon
 } from "react-icons/lu";
-
+ 
 export const SideBar = ({ isVisible }) => {
   return (
     <SideBarStyled isVisible={isVisible}>
