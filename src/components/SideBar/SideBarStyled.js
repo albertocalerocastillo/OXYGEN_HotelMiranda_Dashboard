@@ -138,7 +138,7 @@ export const SideBarCopyrightTitleStyled = styled.p`
     font-size: 1rem;
     color: #212121;
     font-weight: 600;
-    margin: 0;
+    margin: 0; 
 `
 
 export const SideBarCopyrightTextStyled = styled.p`
