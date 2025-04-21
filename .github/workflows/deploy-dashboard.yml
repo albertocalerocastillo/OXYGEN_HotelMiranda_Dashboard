@@ -32,7 +32,7 @@ jobs:
 
       - name: Deploy to S3 bucket
         run: |
-          aws s3 sync ./build s3://${{ secrets.S3_BUCKET_NAME }} --delete --region ${{ secrets.AWS_REGION }}
+          aws s3 sync ./dist s3://${{ secrets.S3_BUCKET_NAME }} --delete --region ${{ secrets.AWS_REGION }}
 
       - name: Run Cypress tests
         run: npm run cypress:run
