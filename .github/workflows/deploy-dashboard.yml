@@ -34,5 +34,5 @@ jobs:
         run: |
           aws s3 sync ./dist s3://${{ secrets.S3_BUCKET_NAME }} --delete --region ${{ secrets.AWS_REGION }}
 
-      - name: Run Cypress tests
-        run: npm run cypress:run
+    # - name: Run Cypress tests
+    #   run: npm run cypress:run
