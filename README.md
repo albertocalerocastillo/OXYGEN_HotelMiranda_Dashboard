@@ -102,7 +102,7 @@ npx cypress open     # o: npx cypress run
 
 ## Puesta en marcha
 
-Requisitos: Node.js LTS y la [API de Hotel Miranda](https://github.com/albertocalerocastillo/OXYGEN_HotelMiranda_REST) corriendo en `http://localhost:3001` (URL fijada en el login y en los thunks).
+Requisitos: Node.js LTS y la [API de Hotel Miranda](https://github.com/albertocalerocastillo/OXYGEN_HotelMiranda_REST) corriendo en `http://localhost:3001` (URL fijada en el login y en los thunks). En desarrollo siempre se usa la API real; el modo demo solo se activa en el build de producción (se puede desactivar con `VITE_DISABLE_DEMO=true`).
 
 ```bash
 git clone https://github.com/albertocalerocastillo/OXYGEN_HotelMiranda_Dashboard.git
@@ -119,7 +119,7 @@ npm run dev
 | `npm run lint` | ESLint sobre todo el proyecto |
 | `npm test` | Tests unitarios con Jest |
 
-**Acceso de demostración**: la pantalla de login muestra el usuario de prueba del proyecto (una cuenta ficticia, solo para la demo del training).
+**Acceso de demostración**: la pantalla de login muestra el usuario de prueba del proyecto (una cuenta ficticia, solo para la demo del training). Funciona tanto contra la API como en la demo publicada.
 
 El front no usa variables de entorno.
 
@@ -133,7 +133,7 @@ Cada push a `main` lanza `.github/workflows/deploy-dashboard.yml`:
 
 Secretos del repositorio que usa: `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_REGION`, `S3_BUCKET_NAME`.
 
-Demo: <http://oxygenhotelmirandadashboard.s3-website.eu-west-3.amazonaws.com>. Lo publicado es el front estático: para iniciar sesión y ver datos hace falta la API corriendo en `localhost:3001`.
+Demo: <http://oxygenhotelmirandadashboard.s3-website.eu-west-3.amazonaws.com>. Lo publicado es el front estático, así que el build de producción arranca en **modo demo** ([`src/demo/demoApi.ts`](src/demo/demoApi.ts)): responde en el propio navegador a las mismas llamadas que se harían a la API, con datos de ejemplo en memoria. Se puede iniciar sesión, navegar, crear, editar, borrar y archivar; al recargar, los datos vuelven al estado inicial.
 
 ## Qué aprendí
 
