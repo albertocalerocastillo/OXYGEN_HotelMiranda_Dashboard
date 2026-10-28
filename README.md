@@ -21,7 +21,15 @@ Proyecto del Training React Full Stack de OXYGEN Academy · Sprint 2 y 3 (React 
 
 </div>
 
-![Pantalla de login del dashboard](docs/login.jpg)
+<table>
+  <tr>
+    <td width="50%"><img src="docs/panel.jpg" alt="Panel principal: KPIs, calendario de reservas y estadísticas"></td>
+    <td width="50%"><img src="docs/rooms.jpg" alt="Listado de habitaciones con precio de oferta y estado"></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><img src="docs/login.jpg" alt="Pantalla de login" width="60%"></td>
+  </tr>
+</table>
 
 ## Qué es
 
