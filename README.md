@@ -4,7 +4,7 @@
 
 **Panel de administración para un hotel: reservas, habitaciones, empleados y mensajes de clientes en una sola SPA.**
 
-Proyecto del bootcamp Full Stack de OXYGEN Academy · Sprint 2 y 3 (React Routing, Redux y Context)
+Proyecto del Training React Full Stack de OXYGEN · Sprint 2 y 3 (React Routing, Redux y Context)
 
 ![React](https://img.shields.io/badge/React_18-20232A?style=flat-square&logo=react&logoColor=61DAFB)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript&logoColor=white)
@@ -119,7 +119,7 @@ npm run dev
 | `npm run lint` | ESLint sobre todo el proyecto |
 | `npm test` | Tests unitarios con Jest |
 
-**Acceso de demostración**: la pantalla de login muestra el usuario de prueba del proyecto (una cuenta ficticia, solo para la demo del bootcamp).
+**Acceso de demostración**: la pantalla de login muestra el usuario de prueba del proyecto (una cuenta ficticia, solo para la demo del training).
 
 El front no usa variables de entorno.
 
@@ -149,6 +149,6 @@ Demo: <http://oxygenhotelmirandadashboard.s3-website.eu-west-3.amazonaws.com>. L
 
 **Proyecto relacionado**: [Hotel Miranda · API REST](https://github.com/albertocalerocastillo/OXYGEN_HotelMiranda_REST), el backend que consume este dashboard.
 
-Hecho por [Alberto Calero](https://github.com/albertocalerocastillo) durante el bootcamp Full Stack de OXYGEN Academy.
+Hecho por [Alberto Calero](https://github.com/albertocalerocastillo) durante el Training React Full Stack de OXYGEN.
 
 </div>
